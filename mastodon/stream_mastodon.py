@@ -24,12 +24,14 @@ m = Mastodon(
 )
 
 class Listener(StreamListener):
-   
-
     def on_update(self, status):
         # Parse the HTML content using BeautifulSoup
         soup = BeautifulSoup(status['content'], 'html.parser')
         content = soup.get_text()
+        
+        # check if content is empty
+        if len(content) == 0:
+            return
         
         # Analyze the sentiment of the content using TextBlob
         blob = TextBlob(content)
@@ -39,8 +41,7 @@ class Listener(StreamListener):
         status_date = status['created_at'].date()
         status_date_str = status_date.strftime('%Y-%m-%d')
 
-        if not content:
-            return
+        
             
         # Search for keywords of Russia and Ukraine war
         keywords = ['russian', 'ukraine', 'war']
