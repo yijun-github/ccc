@@ -1,0 +1,18 @@
+---
+- name: Add host entries to /etc/hosts
+  hosts: instances
+  become: yes
+  vars_files:
+  - host_vars/config.yaml
+  - host_vars/deploy.yaml
+  - host_vars/instances.yaml
+  tasks:
+    - name: Add host entries to /etc/hosts
+      blockinfile:
+        path: /etc/hosts
+        block: |
+          172.26.129.201 worker2
+          172.26.128.91  worker3
+          172.26.133.51  worker1
+          45.113.234.176 manager
+          # . ./group-03-openrc.sh; ansible-playbook --ask-become-pass add_hosts.yaml -i inventory/application_hosts.ini
