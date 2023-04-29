@@ -1,0 +1,42 @@
+{
+    "id": "1508957415366004738",
+    "key": [
+        2022,
+        3,
+        30,
+        "1508957415366004738",
+        "781019903574806529",
+        "1508957415366004738"
+    ],
+    "value": {
+        "tags": "ScottyTheCompletePsycho",
+        "tokens": "doesnt|want|this|retweeted|have|instructions|then|Concetta|Fierravanti|WellsConcetta|Fierravanti|WellsConcetta|Fierravanti|WellsConcetta|Fierravanti|WellsConcetta|Fierravanti|WellsConcetta|Fierravanti|WellsConcetta|Fierravanti|WellsConcetta"
+    },
+    "doc": {
+        "_id": "1508957415366004738",
+        "_rev": "1-74364f072c52008aa33312c09129c74a",
+        "data": {
+            "author_id": "781019903574806529",
+            "conversation_id": "1508957415366004738",
+            "text": "#ScottyTheCompletePsycho doesnt want this retweeted?  I have my instructions then.\n\nConcetta Fierravanti-WellsConcetta Fierravanti-WellsConcetta Fierravanti-WellsConcetta Fierravanti-WellsConcetta Fierravanti-WellsConcetta Fierravanti-WellsConcetta Fierravanti-WellsConcetta",
+            "created_at": "2022-03-30T00:00:57.000Z",
+            "lang": "en",
+            "public_metrics": {
+                "retweet_count": 2,
+                "reply_count": 0,
+                "like_count": 5,
+                "quote_count": 0
+            },
+            "entities": {
+                "hashtags": [
+                    {
+                        "start": 0,
+                        "end": 24,
+                        "tag": "ScottyTheCompletePsycho"
+                    }
+                ]
+            },
+            "sentiment": -0.05555555555555555
+        }
+    }
+}
