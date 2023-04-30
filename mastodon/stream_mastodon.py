@@ -22,7 +22,7 @@ lemmatizer = WordNetLemmatizer()
 # Connect to CouchDB
 # username:password@localhost:5984
 couch = couchdb.Server('http://admin:1231@127.0.0.1:5984/')
-db_name = 'mastodon1'
+db_name = 'mastodon_data_v2'
 if db_name not in couch:
     db = couch.create(db_name)
 else:
@@ -79,14 +79,17 @@ class Listener(StreamListener):
         
         RUwar = False
         RUwar_word_count = 0
-        # if there are more than 2 of keywords occur in a toot, we'll consider it as war related
-        for keyword in RU_keywords:
-            # use set for findall to check if more than 1 word occured in the keyword list, ignore cases
-            # only exact match of the word is considered
-            RUwar_word_count += len(set(re.findall(r'\b{}\b'.format(keyword), lemmatized_content)))
-            if RUwar_word_count>1:
-                RUwar = True
-                continue
+        
+        # check if russia or ukraine is included in the sentence, otherwise it could be get data containing other keywords but not relate to Russian Ukrainian war
+        if re.search(r'\b(russia|ukraine)\b', lemmatized_content):
+            # if there are more than 2 of keywords occur in a toot, we'll consider it as war related
+            for keyword in RU_keywords:
+                # use set for findall to check if more than 1 word occured in the keyword list, ignore cases
+                # only exact match of the word is considered
+                RUwar_word_count += len(set(re.findall(r'\b{}\b'.format(keyword), lemmatized_content)))
+                if RUwar_word_count>1:
+                    RUwar = True
+                    break
         
         # search for keyword of rental related toots
         # try to only contain words that are Russian Ukraine war related
@@ -101,7 +104,7 @@ class Listener(StreamListener):
             rental_word_count += len(set(re.findall(r'\b{}\b'.format(keyword), lemmatized_content)))
             if rental_word_count > 1:
                 rental = True
-                continue
+                break
         
         # Process the data as desired
         processed_data = {
@@ -116,6 +119,6 @@ class Listener(StreamListener):
         # Write the processed data to couchdb
         db.save(processed_data)
 
-while True:
-    listener = Listener()
-    m.stream_public(listener)
+
+listener = Listener()
+m.stream_public(listener)
