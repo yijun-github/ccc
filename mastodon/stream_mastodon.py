@@ -42,37 +42,40 @@ class Listener(StreamListener):
         content = soup.get_text().replace("#", " ")
         
         
-                
-        # check if content is empty
+        # check if content is empty, if it is, skip this toot
         if len(content) == 0:
             return
         
+        # get language of toot
         language = status['language']
         
+        translated_content = None
         # check if language is in english, if not, then textblob can't return a valid sentiment score
         # use google translate to translate this sentence so sentiment analysis will work
+        # use a new variable data to be used for lemmatisation
         if language != "en":
-            content = translator.translate(content, dest='en').text
-        
-        
+            translated_content = translator.translate(content, dest='en').text
+            data = translated_content
+        else:
+            data = content
+
         # Analyze the sentiment of the content using TextBlob
-        blob = TextBlob(content)
+        blob = TextBlob(data)
         sentiment_score = blob.sentiment.polarity
         
         # get date of this toot
-        status_date = status['created_at'].date()
         # select only year and month
+        status_date = status['created_at'].date()
         status_date_str = status_date.strftime('%Y-%m-%d')[:-3]
         
         
-        # Tokenize the content string into individual words
-        words = nltk.word_tokenize(content)
+        # tokenise word for lemmatisation
+        words = nltk.word_tokenize(data)
         # Lemmatize each word in the list of words
         lemmatized_words = [lemmatizer.lemmatize(word) for word in words]
         # Join the lemmatized words back into a string, lower the case os string
         lemmatized_content = " ".join(lemmatized_words).lower()
         
-            
         # Search for keywords of Russia and Ukraine war
         # try to only contain words that are Russian Ukraine war related
         RU_keywords = ['russia', 'ukraine','russian', 'ukrainian', 'war', 'invasion', 'troop', 'crimea', 'donbass', 'luhansk', 'sevastopol', 'maidan', 'annexation', 'occupation', 'shelling', 'nato', 'wagner', 'belgorod', 'putin', 'zelensky']
@@ -110,6 +113,7 @@ class Listener(StreamListener):
         processed_data = {
             'date': status_date_str,
             'content': content,
+            'translated_content': translated_content,
             'language': language,
             'sentiment': sentiment_score,
             'RUwar': RUwar,
