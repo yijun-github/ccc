@@ -1,7 +1,8 @@
 `npm start`
 
-To use app with json-server with `db.json`:
-`json-server --watch db.json --port 3001`
+To use app with json-server:
+`json-server --watch ./src/data/langSentData.json --port 3001`
+`json-server --watch ./src/data/stateSentData.json --port 3002`
 
 
 # Getting Started with Create React App
