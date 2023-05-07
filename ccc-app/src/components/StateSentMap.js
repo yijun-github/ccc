@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MapContainer, GeoJSON, TileLayer } from "react-leaflet";
-
+import { geoJSON } from "leaflet";
 
 export default function StateSentimentMap() {
     const mapStyle = {
@@ -12,7 +12,7 @@ export default function StateSentimentMap() {
     const [stateSentData, setStateSentData] = useState(null)
 
     const getData = () => {
-        fetch('http://localhost:3002/features', {
+        fetch('http://localhost:3002/stateData', {
           header:{
             'Content-Type': 'application/json',
             'Accept': 'application/json'
@@ -27,14 +27,15 @@ export default function StateSentimentMap() {
     }, [])
 
     function getColor(x) {
-        return x > 0.75 ? '#d73027' :
-               x > 0.5  ? '#f46d43' :
-               x > 0.25  ? '#fdae61' :
-               x > 0  ? '#fee090' :
-               x > -0.25   ? '#e0f3f8' :
-               x > -0.5   ? '#abd9e9' :
-               x > -0.75   ? '#74add1' :
-                          '#d73027';
+        const color = ['#d53e4f','#f46d43','#fdae61','#fee08b','#ffffbf','#e6f598','#abdda4','#66c2a5','#3288bd']
+
+        const colorIndex = (
+            (Math.floor(color.length*(1+x)/2) < color.length) ?
+            Math.floor(color.length*(1+x)/2) : 
+            color.length-1
+        )
+
+        return color[colorIndex]
     }
 
     function getStyle(feature) {
@@ -46,6 +47,56 @@ export default function StateSentimentMap() {
             dashArray: '3',
             fillOpacity: 0.7
         };
+    }
+
+    function popup(feature, layer) {
+        var popUpText = `<div style={text-align: center, margin: 5px}>
+            <b>${feature.properties.STATE_NAME}</b>
+            <p><i>Ave. Sentiment: ${feature.properties.Sentiment}</i></p>
+            </div>`
+        if (feature.properties && (feature.properties.Sentiment !== undefined)) {
+            layer.bindPopup(popUpText);
+        }
+    }
+
+    function overFeature(e, layer) {
+        layer.openPopup(e.latlng)
+
+        e.target.setStyle({
+            weight: 5,
+            color: '#666',
+            dashArray: '',
+            fillOpacity: 0.7
+        });
+    
+        e.target.bringToFront();
+    }
+
+    function movePopup(e, layer) {
+        layer.openPopup(e.latlng)
+    }
+
+    function outFeature(e, layer) {
+        layer.closePopup()
+
+        e.target.setStyle({
+            weight: 2,
+            color: 'white',
+            dashArray: '3',
+            fillOpacity: 0.7
+        });
+    
+        e.target.bringToFront();
+    }
+
+    function onEachFeature(feature, layer) {
+        popup(feature, layer)
+
+        layer.on({
+            mouseover: (e) => overFeature(e, layer),
+            mousemove: (e) => movePopup(e, layer),
+            mouseout: (e) => outFeature(e, layer)
+        })
     }
 
     return(
@@ -62,7 +113,9 @@ export default function StateSentimentMap() {
                         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     />
                     {stateSentData && (
-                        <GeoJSON data={stateSentData} key={"Sentiment"} style={getStyle}/>
+                        <GeoJSON data={stateSentData} key={"Sentiment"} style={getStyle}
+                            onEachFeature={onEachFeature}
+                        />
                     )}
                 </MapContainer>
                 </div>
