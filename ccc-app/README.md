@@ -2,7 +2,7 @@
 
 To use app with json-server:
 `json-server --watch ./src/data/langSentData.json --port 3001`
-`json-server --watch ./src/data/stateSentData.json --port 3002`
+`json-server --watch ./src/data/stateData.json --port 3002`
 
 
 # Getting Started with Create React App

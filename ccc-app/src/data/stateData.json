@@ -8,7 +8,9 @@
         "properties": {
           "STATE_CODE": "1",
           "STATE_NAME": "New South Wales",
-          "Sentiment": 1
+          "Sentiment": 1,
+          "Party1Perc": 60.0,
+          "Party2Perc": 40.0
         },
         "geometry": {
           "type": "MultiPolygon",
@@ -23,7 +25,9 @@
         "properties": {
           "STATE_CODE": "2",
           "STATE_NAME": "Victoria",
-          "Sentiment": 0.75
+          "Sentiment": 0.75,
+          "Party1Perc": 50.0,
+          "Party2Perc": 50.0
         },
         "geometry": {
           "type": "MultiPolygon",
@@ -38,7 +42,9 @@
         "properties": {
           "STATE_CODE": "3",
           "STATE_NAME": "Queensland",
-          "Sentiment": 0.5
+          "Sentiment": -0.25,
+          "Party1Perc": 45.0,
+          "Party2Perc": 55.0
         },
         "geometry": {
           "type": "MultiPolygon",
@@ -53,7 +59,9 @@
         "properties": {
           "STATE_CODE": "4",
           "STATE_NAME": "South Australia",
-          "Sentiment": 0.25
+          "Sentiment": 0.25,
+          "Party1Perc": 40.0,
+          "Party2Perc": 60.0
         },
         "geometry": {
           "type": "MultiPolygon",
@@ -68,7 +76,9 @@
         "properties": {
           "STATE_CODE": "5",
           "STATE_NAME": "Western Australia",
-          "Sentiment": 0
+          "Sentiment": 0,
+          "Party1Perc": 70.0,
+          "Party2Perc": 30.0
         },
         "geometry": {
           "type": "MultiPolygon",
@@ -83,7 +93,9 @@
         "properties": {
           "STATE_CODE": "6",
           "STATE_NAME": "Tasmania",
-          "Sentiment": -0.25
+          "Sentiment": 1,
+          "Party1Perc": 35.0,
+          "Party2Perc": 65.0
         },
         "geometry": {
           "type": "MultiPolygon",
@@ -98,7 +110,9 @@
         "properties": {
           "STATE_CODE": "7",
           "STATE_NAME": "Northern Territory",
-          "Sentiment": -0.5
+          "Sentiment": -0.5,
+          "Party1Perc": 60.0,
+          "Party2Perc": 40.0
         },
         "geometry": {
           "type": "MultiPolygon",
@@ -113,7 +127,9 @@
         "properties": {
           "STATE_CODE": "8",
           "STATE_NAME": "Australian Capital Territory",
-          "Sentiment": -0.75
+          "Sentiment": -0.75,
+          "Party1Perc": 45.0,
+          "Party2Perc": 55.0
         },
         "geometry": {
           "type": "Polygon",
