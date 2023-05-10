@@ -6,8 +6,6 @@ import StateSentLayer from "./StateSentLayer";
 import StateParty1Layer from "./StateParty1Layer";
 import StateParty2Layer from "./StateParty2Layer";
 
-import "./Scenario1Map.css"
-
 export default function Scenario1Map() {
     const mapStyle = {
         height: '100vh',
