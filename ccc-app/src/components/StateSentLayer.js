@@ -8,12 +8,6 @@ export default function StateSentLayer(props) {
 
     const stateData = props.data
 
-    const mapStyle = {
-        height: '100vh',
-        width: '100%',
-        margin: '0 auto',
-    }
-
     function getColor(x) {
         const colors = ['#d53e4f','#f46d43','#fdae61','#fee08b','#ffffbf','#e6f598','#abdda4','#66c2a5','#3288bd'] //Diverging-Red-Blue
 
@@ -46,12 +40,7 @@ export default function StateSentLayer(props) {
     function overFeature(e, layer) {
         layer.openPopup(e.latlng)
 
-        e.target.setStyle({
-            weight: 5,
-            color: '#666',
-            dashArray: '',
-            fillOpacity: 0.7
-        });
+        e.target.setStyle(e.target.feature);
     
         e.target.bringToFront();
     }

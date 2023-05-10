@@ -8,12 +8,6 @@ export default function StateParty1Layer(props) {
 
     const stateData = props.data
 
-    const mapStyle = {
-        height: '100vh',
-        width: '100%',
-        margin: '0 auto',
-    }
-
     function getColor(x) {
         const colors = ['#f7fcf0','#e0f3db','#ccebc5','#a8ddb5','#7bccc4','#4eb3d3','#2b8cbe','#0868ac','#084081'] //Sequential-Blue
 
@@ -46,12 +40,7 @@ export default function StateParty1Layer(props) {
     function overFeature(e, layer) {
         layer.openPopup(e.latlng)
 
-        e.target.setStyle({
-            weight: 5,
-            color: '#666',
-            dashArray: '',
-            fillOpacity: 0.7
-        });
+        e.target.setStyle(e.target.feature);
     
         e.target.bringToFront();
     }
