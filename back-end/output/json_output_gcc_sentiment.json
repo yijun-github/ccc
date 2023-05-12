@@ -1,0 +1,77 @@
+{
+    "1gsyd": {
+        "Average sentiment": -1.021555936048382e-06,
+        "Sum of Sentiment": -137.3131388976285,
+        "Total": 2388
+    },
+    "1rnsw": {
+        "Average sentiment": -1.8164151332573078e-05,
+        "Sum of Sentiment": -46.706234229043886,
+        "Total": 505
+    },
+    "2gmel": {
+        "Average sentiment": -1.1538821988025759e-06,
+        "Sum of Sentiment": -94.32106179294303,
+        "Total": 1827
+    },
+    "2rvic": {
+        "Average sentiment": -2.198576715772957e-05,
+        "Sum of Sentiment": -11.599658311684706,
+        "Total": 241
+    },
+    "3gbri": {
+        "Average sentiment": -6.070077051087664e-06,
+        "Sum of Sentiment": -51.57241280875441,
+        "Total": 861
+    },
+    "3rqld": {
+        "Average sentiment": -0.0028254101867581957,
+        "Sum of Sentiment": -3.87117768436042,
+        "Total": 49
+    },
+    "4gade": {
+        "Average sentiment": -1.3220591622233294e-05,
+        "Sum of Sentiment": -10.79293854018649,
+        "Total": 320
+    },
+    "4rsau": {
+        "Average sentiment": -0.010334597167599819,
+        "Sum of Sentiment": -2.332227215880106,
+        "Total": 21
+    },
+    "5gper": {
+        "Average sentiment": -7.010825456939088e-06,
+        "Sum of Sentiment": -75.19576950615448,
+        "Total": 895
+    },
+    "5rwau": {
+        "Average sentiment": 0.0007239717585233072,
+        "Sum of Sentiment": 6.012289813659146,
+        "Total": 101
+    },
+    "6ghob": {
+        "Average sentiment": -9.354241238568655e-05,
+        "Sum of Sentiment": -9.929981991551294,
+        "Total": 108
+    },
+    "6rtas": {
+        "Average sentiment": -0.0073572984522512486,
+        "Sum of Sentiment": -4.57964061624414,
+        "Total": 35
+    },
+    "7gdar": {
+        "Average sentiment": -4.603667218579702e-05,
+        "Sum of Sentiment": -5.046862241873086,
+        "Total": 103
+    },
+    "7rnte": {
+        "Average sentiment": -0.0029373571156137935,
+        "Sum of Sentiment": -3.827053527906563,
+        "Total": 51
+    },
+    "8acte": {
+        "Average sentiment": -1.2638746655789248e-05,
+        "Sum of Sentiment": -20.024649108972838,
+        "Total": 340
+    }
+}
