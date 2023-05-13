@@ -19,15 +19,7 @@ Australian Capital Territory
 Other Territories
 """
 
-
-#print(gcc_geo["features"][0]["properties"]['GCC_CODE21'])
-"""
-data["features"][0].keys(): ['type', 'geometry', 'properties']
-for i in range(9):
-    print(state_geo["features"][i]["properties"]["STE_NAME21"])
-"""
-
-#state_sentiment
+# sentiment: state_sentiment
 with open('geoJSON files/states/STE_2021_AUST_GDA2020_Simplified.json', 'r') as file:
         state_geo = json.load(file)
 @app.route('/state_sentiment')
@@ -73,22 +65,24 @@ def get_points():
             "Total": total,
         }
         data1[i] = new_item
+    state_sentiment_output = {"type": "FeatureCollection","features": []}
     with open('json_output_state_sentiment.json', 'w') as f:
         json.dump(data1, f)
 
-    for row in data1:
-        for feature in state_geo['features']:
+    for feature in state_geo['features']:
+        for row in data1:
             if feature["properties"]["STE_NAME21"].lower() == row:
+                
                 for i in data1[row]:
                     feature["properties"][i] = data1[row][i]
-
+                state_sentiment_output["features"].append(feature)
 
     with open('geo_output_state_sentiment.json', 'w') as file:
-        json.dump(state_geo, file)
+        json.dump(state_sentiment_output, file)
 
-    return jsonify(state_geo)
+    return jsonify(state_sentiment_output)
 
-#gcc_sentiment
+# sentiment: gcc_sentiment
 with open('geoJSON files/gcc/GCCSA_2021_AUST_GDA2020.json', 'r') as file2:
         gcc_geo = json.load(file2)
         
@@ -98,12 +92,13 @@ def get_points1():
     results1 = db.view('_design/sentiment/_view/ave_sent_gcc', group=True)
 
     data = {}
+    gcc_sentiment_output = {"type": "FeatureCollection","features": []}
     for row in results:
         for ii in results1:
             if ii.key == row.key:
                 ave_sen = ii.value["sentiment"]
         new_item = {
-            "Average sentiment": ave_sen,
+            "Average Sentiment": ave_sen,
             "Sum of Sentiment": row.value["sentiment"],
             "Total": row.value["count"],
         }
@@ -112,26 +107,30 @@ def get_points1():
     with open('json_output_gcc_sentiment.json', 'w') as f:
         json.dump(data, f)
 
-    for row in data:
-        for feature in gcc_geo['features']:
-            if feature["properties"]['GCC_CODE21'].lower() == row:
+    for feature in gcc_geo['features']:
+        for row in data:
+            if feature["properties"]['GCC_CODE21'].lower() == row.lower():
                 for i in data[row]:
                     feature["properties"][i] = data[row][i]
+                gcc_sentiment_output["features"].append(feature)
 
     with open('geo_output_gcc_sentiment.json', 'w') as file22:
-        json.dump(gcc_geo, file22)
+        json.dump(gcc_sentiment_output, file22)
 
-    return jsonify(gcc_geo)
+    return jsonify(gcc_sentiment_output)
 
-#postcode_sentiment
+# sentiment: postcode_sentiment
+with open('geoJSON files/postcode/POA_2021_AUST_GDA2020_Large.json', 'r') as file3:
+        postcode_geo = json.load(file3)
+
 @app.route('/postcode_sentiment')
 def get_points2():
     # Queries the view and returns data
     results = db.view('_design/sentiment/_view/war_postcode', group=True)
     results1 = db.view('_design/sentiment/_view/ave_sent_postcode', group=True)
 
-    
     data = []
+    postcode_sentiment_output = {"type": "FeatureCollection","features": []}
     all_postcode = []
     for row in results:
         if row.key[0] == None:
@@ -166,10 +165,22 @@ def get_points2():
             "Total": total,
         }
         data1[i] = new_item
-        
-    return jsonify(data1)
 
-#Languages vs sentiment
+    for row in data1:
+        for feature in postcode_geo['features']:
+            if row == feature["properties"]['POA_CODE21']:
+                for i in data1[row]:
+                    feature["properties"][i] = data1[row][i]
+                postcode_sentiment_output["features"].append(feature)
+
+
+    with open('geo_output_postcode_sentiment.json', 'w') as file33:
+        json.dump(postcode_sentiment_output, file33)
+    
+    return jsonify(postcode_sentiment_output)
+    
+
+# sentiment: Languages vs sentiment
 @app.route('/twitter_languages_sentiment')
 def get_data1():
     # Queries the view and returns data
@@ -215,13 +226,14 @@ def get_data1():
         
     return jsonify(data1)
 
-# magnitude of sentiment by state
+# sentiment: magnitude of sentiment by state
 @app.route('/mag_sentiment_state')
 def get_data3():
     results = db.view('_design/sentiment/_view/mag_sent_lan_state', group=True)
 
     data = []
     all_state = []
+    output = {"type": "FeatureCollection","features": []}
     for row in results:
         if row.key["state"] == None:
             continue
@@ -242,15 +254,30 @@ def get_data3():
                 dic[j.key["language"]] = new_item0
 
         data1[i] = dic
-    return jsonify(data1)
+    with open('json_output_mag_sentiment_state.json', 'w') as f:
+        json.dump(data1, f)
 
-# magnitude of sentiment by postode
+    for feature in state_geo['features']:
+        for row in data1:
+            if feature["properties"]["STE_NAME21"].lower() == row:
+
+                for i in data1[row]:
+                    feature["properties"][i] = data1[row][i]
+                output["features"].append(feature)
+
+    with open('geo_output_state_sentiment.json', 'w') as file:
+        json.dump(output, file)
+
+    return jsonify(output)
+
+# sentiment: magnitude of sentiment by postode
 @app.route('/mag_sentiment_postcode')
 def get_data4():
     results = db.view('_design/sentiment/_view/mag_sent_lan_postcode', group=True)
 
     data = []
     all_postcode = []
+    output = {"type": "FeatureCollection","features": []}
     for row in results:
         if row.key["postcode"] == None:
             continue
@@ -271,6 +298,47 @@ def get_data4():
                 dic[j.key["language"]] = new_item0
 
         data1[i] = dic
+
+    with open('json_output_mag_sentiment_postcode.json', 'w') as f:
+        json.dump(data1, f)
+
+    for row in data1:
+        for feature in postcode_geo['features']:
+            if row == feature["properties"]['POA_CODE21']:
+                for i in data1[row]:
+                    feature["properties"][i] = data1[row][i]
+                output["features"].append(feature)
+
+    with open('geo_output_mag_sentiment_postcode.json', 'w') as file33:
+        json.dump(output, file33)
+
+    return jsonify(output)
+
+# general: tweet_lang_hourRange
+@app.route('/tweet_lang_hourRange')
+def get_data10():
+    results = db.view('_design/general/_view/tweet_postcode', group=True)
+
+    data = []
+    all_language = []
+    for row in results:
+        if row.key["language"] == None:
+            continue
+        if row.key["language"] not in all_language:
+            all_language.append(row.key["language"])
+        data.append(row)
+
+    data1 = {}
+    for i in all_language:
+        new = {"day":0,"night":0}
+        for j in data:
+            if j.key["language"] == i:
+                new[j.key["hourRange"]] += j.value
+        data1[i] = new
+
+    with open('json_output_tweet_lang_hourRange.json', 'w') as f:
+        json.dump(data1, f)
+
     return jsonify(data1)
 
 # general: tweet_lang_state
@@ -280,6 +348,7 @@ def get_data5():
 
     data = []
     all_state = []
+    output = {"type": "FeatureCollection","features": []}
     for row in results:
         if row.key["state"] == None:
             continue
@@ -304,9 +373,25 @@ def get_data5():
             dic[g] = new
 
         data1[i] = dic
-    return jsonify(data1)
 
-# lgbt_sent_postcode
+    with open('json_output_tweet_lang_state.json', 'w') as f:
+        json.dump(data1, f)
+
+    for feature in state_geo['features']:
+        for row in data1:
+            if feature["properties"]["STE_NAME21"].lower() == row:
+                for i in data1[row]:
+                    feature["properties"][i] = data1[row][i]
+                output["features"].append(feature)
+
+    with open('geo_output_tweet_lang_state.json', 'w') as file:
+        json.dump(output, file)
+
+    return jsonify(output)
+
+
+
+# lgbt: lgbt_sent_postcode
 @app.route('/lgbt_sent_postcode')
 def get_points6():
     # Queries the view and returns data
@@ -314,6 +399,7 @@ def get_points6():
  
     data = []
     all_postcode = []
+    output = {"type": "FeatureCollection","features": []}
     for row in results:
         if row.key[0] == None:
             continue
@@ -344,16 +430,29 @@ def get_points6():
             "Total": total,
         }
         data1[i] = new_item
-        
-    return jsonify(data1)
+    with open('json_output_lgbt_postcode.json', 'w') as f:
+        json.dump(data1, f)
 
-# mag_sent_lan_postcode
-@app.route('/mag_sentiment_postcode')
+    for row in data1:
+        for feature in postcode_geo['features']:
+            if row == feature["properties"]['POA_CODE21']:
+                for i in data1[row]:
+                    feature["properties"][i] = data1[row][i]
+                output["features"].append(feature)
+
+    with open('geo_output_lgbt_postcode.json', 'w') as file33:
+        json.dump(output, file33)
+        
+    return jsonify(output)
+
+# lgbt: mag_sent_lan_postcode
+@app.route('/mag_sentiment_lan_postcode')
 def get_data7():
     results = db.view('_design/lgbt/_view/mag_sent_lan_postcode', group=True)
 
     data = []
     all_postcode = []
+    output = {"type": "FeatureCollection","features": []}
     for row in results:
         if row.key["postcode"] == None:
             continue
@@ -374,7 +473,21 @@ def get_data7():
                 dic[j.key["language"]] = new_item0
 
         data1[i] = dic
-    return jsonify(data1)
+
+    with open('json_output_mag_sentiment_lan_postcode.json', 'w') as f:
+        json.dump(data1, f)
+
+    for row in data1:
+        for feature in postcode_geo['features']:
+            if row == feature["properties"]['POA_CODE21']:
+                for i in data1[row]:
+                    feature["properties"][i] = data1[row][i]
+                output["features"].append(feature)
+
+    with open('geo_output_mag_sentiment_lan_postcode.json', 'w') as file33:
+        json.dump(output, file33)
+        
+    return jsonify(output)
 
 if __name__ == '__main__':
     app.run(debug=True) 
