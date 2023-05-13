@@ -8,7 +8,7 @@ import PieLangPos from "./PieLangPos";
 function Scenario2() {
   return (
     <>
-    <h1>Scenario2</h1>
+    <h1>Scenario 2</h1>
     <div className='div--state-sent-map'>
       <Scenario1Map />
     </div>

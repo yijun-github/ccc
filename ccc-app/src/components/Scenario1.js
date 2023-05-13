@@ -8,7 +8,7 @@ import PieLangPos from "./PieLangPos";
 function Scenario1() {
   return (
     <>
-    <h1>Scenario 1</h1>
+    <h1>Ukraine Russia War</h1>
     <div className='div--state-sent-map'>
       <Scenario1Map />
     </div>
