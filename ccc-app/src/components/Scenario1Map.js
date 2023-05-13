@@ -30,13 +30,12 @@ export default function Scenario1Map() {
         getData()
     }, [])
 
+
+
     const { BaseLayer } = LayersControl
 
     return(
          <div className='container'>
-            <div className="header">
-            <h2 className='heading'>War and Politics</h2>
-            <p className="text-muted">Choropleth Map</p></div>
             <div className="">
                 <div className="">
                 <MapContainer center={[-26.90, 133.76]}

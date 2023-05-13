@@ -1,28 +1,29 @@
 import './App.css';
-import StackedBarLangSent from './components/StackedBarLangSent.js';
-import BarAveLangSent from './components/BarAveLangSent.js';
-import BarLang from './components/BarLang';
-import PieLangPos from './components/PieLangPos';
-import Scenario1Map from './components/Scenario1Map';
+import React from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
+import Scenario1 from './components/Scenario1';
+import Scenario2 from './components/Scenario2';
+import Scenario3 from './components/Scenario3';
 
 function App() {
   return (
     <>
-    <div className='div--state-sent-map'>
-      <Scenario1Map />
-    </div>
-    <div className='div--stacked-bar'>
-      <StackedBarLangSent />
-    </div>
-    <div className='div--bar'>
-      <BarAveLangSent />
-    </div>
-    <div className='div--bar'>
-      <BarLang />
-    </div>
-    <div className='div--pie'>
-      <PieLangPos />
-    </div>
+    <nav>
+      <ul>
+        <li><Link to='/Scenario1'>Scenario 1</Link></li>
+      </ul>
+      <ul>
+        <li><Link to='/Scenario2'>Scenario 2</Link></li>
+      </ul>
+      <ul>
+        <li><Link to='/Scenario3'>Scenario 3</Link></li>
+      </ul>
+    </nav>
+    <Routes>
+      <Route path='/Scenario1' element={<Scenario1 />} />
+      <Route path='/Scenario2' element={<Scenario2 />} />
+      <Route path='/Scenario3' element={<Scenario3 />} />
+    </Routes>
     </>
   );
 }
