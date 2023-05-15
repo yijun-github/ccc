@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, LayersControl } from "react-leaflet";
-import { geoJSON } from "leaflet";
+
 
 import StateSentLayer from "./StateSentLayer";
 import StateParty1Layer from "./StateParty1Layer";

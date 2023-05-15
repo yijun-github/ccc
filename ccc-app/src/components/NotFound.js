@@ -7,9 +7,9 @@ export default function NotFound() {
 
     useEffect(() => {
         setTimeout(() => {
-            navigate(-1)
+            navigate('/')
         }, 1000)
     })
 
-    return <h1>Page Not Found! Redirecting to previous page...</h1>
+    return <h1>Page Not Found! Redirecting to home page...</h1>
 }
