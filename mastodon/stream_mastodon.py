@@ -14,6 +14,7 @@ nltk.download('wordnet')
 # pip install googletrans==3.1.0a0
 # pip install googletrans doesn't work, will have translate issue
 from googletrans import Translator
+import warnings
 
 translator = Translator()
 lemmatizer = WordNetLemmatizer()
@@ -22,7 +23,7 @@ lemmatizer = WordNetLemmatizer()
 # Connect to CouchDB
 # username:password@localhost:5984
 couch = couchdb.Server('http://admin:1231@127.0.0.1:5984/')
-db_name = 'mastodon_data_v2'
+db_name = 'mastodon_data_v3'
 if db_name not in couch:
     db = couch.create(db_name)
 else:
@@ -36,8 +37,15 @@ m = Mastodon(
 
 class Listener(StreamListener):
     def on_update(self, status):
+    
         # Parse the HTML content using BeautifulSoup, toots are formatted in html form
-        soup = BeautifulSoup(status['content'], 'html.parser')
+        with warnings.catch_warnings(record=True) as w:
+            soup = BeautifulSoup(status["content"], 'html.parser')
+            for warning in w:
+                if isinstance(warning.message, MarkupResemblesLocatorWarning):
+                    print(status["content"])
+                    return
+
         # if there are hashtags in string, replace with whitespace
         content = soup.get_text().replace("#", " ")
         
@@ -65,8 +73,9 @@ class Listener(StreamListener):
         
         # get date of this toot
         # select only year and month
-        status_date = status['created_at'].date()
+        status_date = status['created_at']
         status_date_str = status_date.strftime('%Y-%m-%d')[:-3]
+        status_hour_str = status_date.hour
         
         
         # tokenise word for lemmatisation
