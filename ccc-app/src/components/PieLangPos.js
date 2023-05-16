@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { PieChart, Pie, Sector } from "recharts";
+import ChartTitle from './ChartTitle';
 
 const renderActiveShape = (props) => {
     const RADIAN = Math.PI / 180;
@@ -67,6 +68,10 @@ export default function PieLangPos() {
         })
         .then((res) => res.json())
         .then((data) => {setLangSentData(data)})
+        .catch(err => {
+          console.log('======failed to fetch data=======');
+          console.log(err);
+      });
     }
 
     useEffect(() => {
@@ -75,7 +80,7 @@ export default function PieLangPos() {
   
     return (
       <>
-        <h3>Positive Sentiment by Language</h3>
+        <ChartTitle title="Positive Sentiment by Language" />
         <PieChart width={400} height={400}>
         <Pie
           activeIndex={activeIndex}

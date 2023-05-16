@@ -24,6 +24,10 @@ export default function Scenario1Map() {
         })
         .then((res) => res.json())
         .then((data) => {setStateData(data)})
+        .catch(err => {
+            console.log('======failed to fetch data=======');
+            console.log(err);
+        });
       }
 
     useEffect(() => {

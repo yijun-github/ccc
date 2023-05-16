@@ -10,6 +10,7 @@ import {
   ReferenceLine,
   ResponsiveContainer
 } from "recharts";
+import ChartTitle from "./ChartTitle";
 
 export default function BarLang() {
     const [langSentData, setLangSentData] = useState([])
@@ -23,6 +24,10 @@ export default function BarLang() {
         })
         .then((res) => res.json())
         .then((data) => {setLangSentData(data)})
+        .catch(err => {
+          console.log('======failed to fetch data=======');
+          console.log(err);
+      });
       }
 
     useEffect(() => {
@@ -32,9 +37,9 @@ export default function BarLang() {
 
     return (
         <div>
-            <h3>Language frequency</h3>
+            <ChartTitle title="Language Mean Sentiment" />
             <BarChart
-                width={400}
+                width={300}
                 height={300}
                 data={langSentData}
                 margin={{

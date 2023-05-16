@@ -10,6 +10,8 @@ import {
   ReferenceLine,
   ResponsiveContainer
 } from "recharts";
+import ChartTitle from "./ChartTitle";
+import { Container } from "@mui/material";
 
 export default function StackedBarLangSent() {
     const [langSentData, setLangSentData] = useState([])
@@ -23,6 +25,10 @@ export default function StackedBarLangSent() {
         })
         .then((res) => res.json())
         .then((data) => {setLangSentData(data)})
+        .catch(err => {
+          console.log('======failed to data=======');
+          console.log(err);
+      });
       }
 
     useEffect(() => {
@@ -31,17 +37,17 @@ export default function StackedBarLangSent() {
 
 
     return (
-        <div>
-            <h3>Positive and Negative Sentiment by Language</h3>
+        <Container>
+            <ChartTitle title="Positive and Negative Sentiment by Language" />
             <BarChart
                 stackOffset="sign"
-                width={400}
+                width={300}
                 height={300}
                 data={langSentData}
                 margin={{
-                    top: 25,
-                    right: 20,
-                    left: 20,
+                    top: 10,
+                    right: 5,
+                    left: 5,
                     bottom: 10
                 }}
             >
@@ -55,7 +61,7 @@ export default function StackedBarLangSent() {
                 <Bar dataKey="neg" fill="#DD00DD" stackId="stack" />
             </BarChart>
             
-        </div>
+        </Container>
   );
 }
 

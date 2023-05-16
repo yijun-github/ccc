@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { 
   CssBaseline, Toolbar, Box } from "@mui/material";
@@ -12,6 +12,23 @@ import Home from './components/Home';
 import SideNav from './components/SideNav';
 
 function App() {
+  const [testData, setTestData] = useState(null)
+  
+  const getData = () => {
+    console.log("Fetching Data Test")
+    fetch('http://172.26.133.51:5984/sentiment/state_sentiment', {
+      header:{
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    }).then((res) => console.log(res));
+    console.log(testData)
+  }
+
+  useEffect(() => {
+      getData()
+  }, [])
+
   return (
     <>
     <Box sx={{ display: 'flex' }}>

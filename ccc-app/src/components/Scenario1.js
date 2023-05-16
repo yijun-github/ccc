@@ -26,22 +26,22 @@ function Scenario1() {
     </Container>
     <Container style={{ marginTop: '50px', display: 'flex' }}>
       <Grid container spacing={2} justify="center">
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card>
               <StackedBarLangSent />
             </Card>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card>
               <BarAveLangSent />
             </Card>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card>
               <BarLang />
             </Card>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card>
               <PieLangPos />
             </Card>
