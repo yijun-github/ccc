@@ -1,9 +1,10 @@
 import React from "react";
-import Scenario1Map from "./Scenario1Map";
+import Scenario1Map from "./war/Scenario1Map";
 import StackedBarLangSent from "./StackedBarLangSent";
 import BarAveLangSent from "./BarAveLangSent";
 import BarLang from "./BarLang";
 import PieLangPos from "./PieLangPos";
+import LinesByHour from "./general/LinesByHour";
 
 import { 
   Typography, AppBar,
@@ -43,7 +44,7 @@ function Scenario3() {
           </Grid>
           <Grid item>
             <Card>
-              <PieLangPos />
+              <LinesByHour />
             </Card>
           </Grid>
       </Grid>

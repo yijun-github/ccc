@@ -15,7 +15,7 @@ const drawerWidth = 240;
 
 export default function SideNav() {
     const navInfo = [{'label': 'Home', 'link': '/'}, {'label': 'Ukraine-Russia War', 'link': '/Scenario1'},
-    {'label': 'Scenario 2', 'link': '/Scenario2'}, {'label': 'Scenario 3', 'link': '/Scenario3'}]
+    {'label': 'LGBT', 'link': '/Scenario2'}, {'label': 'General', 'link': '/Scenario3'}]
 
     return (
     <>
@@ -25,7 +25,7 @@ export default function SideNav() {
         sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}>
         <Toolbar>
                 <Typography variant="h4" noWrap component="div">
-                    CCC A2
+                    CCC Team 14
                 </Typography>
             </Toolbar>
     </AppBar>
@@ -37,6 +37,7 @@ export default function SideNav() {
                 width: drawerWidth,
                 boxSizing: 'border-box',
             },
+            color: "#c5eceb"
         }}
         variant="permanent"
         anchor="left"

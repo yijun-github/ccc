@@ -7,34 +7,11 @@ import Scenario1 from './components/Scenario1';
 import Scenario2 from './components/Scenario2';
 import Scenario3 from './components/Scenario3';
 import NotFound from './components/NotFound';
-import Nav from './components/Nav';
 import Home from './components/Home';
 import SideNav from './components/SideNav';
 
 function App() {
-  const [testData, setTestData] = useState(null)
   
-  const getData = () => {
-    console.log("Fetching Data Test")
-    fetch('http://45.113.234.176:5000/sentiment/state_sentiment', {
-      mode: 'cors',
-      header:{
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    })
-    .then((res) => res.json())
-    .then((data) => {console.log(data)})
-    .catch(err => {
-        console.log('======failed to fetch data=======');
-        console.log(err);
-    });
-  }
-
-  useEffect(() => {
-      getData()
-  }, [])
-
   return (
     <>
     <Box sx={{ display: 'flex' }}>
