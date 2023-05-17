@@ -16,13 +16,19 @@ function App() {
   
   const getData = () => {
     console.log("Fetching Data Test")
-    fetch('http://172.26.133.51:5984/sentiment/state_sentiment', {
+    fetch('http://45.113.234.176:5000/sentiment/state_sentiment', {
+      mode: 'cors',
       header:{
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
-    }).then((res) => console.log(res));
-    console.log(testData)
+    })
+    .then((res) => res.json())
+    .then((data) => {console.log(data)})
+    .catch(err => {
+        console.log('======failed to fetch data=======');
+        console.log(err);
+    });
   }
 
   useEffect(() => {
