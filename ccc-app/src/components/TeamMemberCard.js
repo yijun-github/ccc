@@ -16,7 +16,7 @@ export default function TeamMemberCard({ img, firstName, lastName }) {
             component="img"
             image={img}
             sx={{
-                borderRadius: '3em',
+                borderRadius: '50%',
                 width:"auto",
                 height:"10em",
                 margin: "1em"
