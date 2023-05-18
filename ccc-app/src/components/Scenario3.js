@@ -19,13 +19,13 @@ import PageTitle from "./PageTitle";
 function Scenario3() {
   return (
     <>
-    <PageTitle title="Scenario 3" />
-    <Container maxWidth="lg" style={{ marginTop: '50px' }}>
+    <PageTitle title="Time" />
+    <Container maxWidth="lg" style={{ marginTop: '2em' }}>
       <div className='div--state-sent-map'>
         <Scenario1Map />
       </div>
     </Container>
-    <Container style={{ marginTop: '50px', display: 'flex' }}>
+    <Container style={{ marginTop: '2em', display: 'flex' }}>
       <Grid container spacing={2} justify="center">
           <Grid item>
             <Card>

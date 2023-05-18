@@ -2,23 +2,23 @@ import React from "react";
 import { GeoJSON, LayersControl } from "react-leaflet";
 import { geoJSON } from "leaflet";
 
-export default function PostLgbtLayer(props) {
+export default function StateParty1Layer(props) {
 
     const checked = (props.checked ? true : false)
 
-    const postData = props.data
+    const stateData = props.data
 
     function getColor(x) {
-        const colors = ['#b2182b','#d6604d','#f4a582','#fddbc7','#d1e5f0','#92c5de','#4393c3','#2166ac'] //Diverging-Red-Blu
+        const colors = ['#f7fcf0','#e0f3db','#ccebc5','#a8ddb5','#7bccc4','#4eb3d3','#2b8cbe','#0868ac','#084081'] //Sequential-Blue
 
-        const colorIndex = Math.min(Math.floor(colors.length*(x)), colors.length-1)
+        const colorIndex = Math.min(Math.floor(colors.length*(x)/100), colors.length-1)
 
         return colors[colorIndex]
     }
 
     function getStyle(feature) {
         return {
-            fillColor: getColor(feature.properties["Positive Proportion"]+feature.properties["Neutral Proportion"]/2),
+            fillColor: getColor(feature.properties.Party1Perc),
             weight: 2,
             opacity: 1,
             color: 'white',
@@ -27,19 +27,12 @@ export default function PostLgbtLayer(props) {
         };
     }
 
-    function round(x, nDecimal) {
-        return (Math.round((x + Number.EPSILON) * (10**nDecimal)) / (10**nDecimal))
-    }
-
     function popup(feature, layer) {
         var popUpText = `<div style={text-align: center, margin: 5px}>
-            <b>Postcode: ${feature.properties.POA_CODE21}</b>
-            <p><i>Positive %: ${round(feature.properties["Positive Proportion"]*100, 2)}</i></p>
-            <p><i>Neutral %: ${round(feature.properties["Neutral Proportion"]*100, 2)}</i></p>
-            <p><i>Negative %: ${round(feature.properties["Negative Proportion"]*100, 2)}</i></p>
-            <p><i>Total: ${feature.properties["Total"]}</i></p>
+            <b>${feature.properties.STATE_NAME}</b>
+            <p><i>Party 1 %: ${feature.properties.Party1Perc}</i></p>
             </div>`
-        if (feature.properties && (feature.properties["Positive Proportion"] !== undefined)) {
+        if (feature.properties && (feature.properties.Party1Perc !== undefined)) {
             layer.bindPopup(popUpText);
         }
     }
@@ -82,9 +75,9 @@ export default function PostLgbtLayer(props) {
     const { BaseLayer } = LayersControl
 
     return(
-        <BaseLayer checked={checked} name="Postcode LGBT Sentiment">
-            {postData && (
-                <GeoJSON data={postData} key={"Proportional Sentiment"} style={getStyle}
+        <BaseLayer checked={checked} name="Party 1 %">
+            {stateData && (
+                <GeoJSON data={stateData} key={"Party1Perc"} style={getStyle}
                     onEachFeature={onEachFeature}
                 />
             )}

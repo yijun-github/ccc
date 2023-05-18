@@ -2,16 +2,16 @@ import React from "react";
 import { GeoJSON, LayersControl } from "react-leaflet";
 import { geoJSON } from "leaflet";
 
-export default function PostLgbtLayer(props) {
+export default function StateWarLayer(props) {
 
     const checked = (props.checked ? true : false)
 
-    const postData = props.data
+    const stateData = props.data
 
     function getColor(x) {
         const colors = ['#b2182b','#d6604d','#f4a582','#fddbc7','#d1e5f0','#92c5de','#4393c3','#2166ac'] //Diverging-Red-Blu
 
-        const colorIndex = Math.min(Math.floor(colors.length*(x)), colors.length-1)
+        const colorIndex = Math.min(Math.floor(colors.length*3*(x-0.25)), colors.length-1)
 
         return colors[colorIndex]
     }
@@ -33,7 +33,7 @@ export default function PostLgbtLayer(props) {
 
     function popup(feature, layer) {
         var popUpText = `<div style={text-align: center, margin: 5px}>
-            <b>Postcode: ${feature.properties.POA_CODE21}</b>
+            <b>State: ${feature.properties.STE_NAME21}</b>
             <p><i>Positive %: ${round(feature.properties["Positive Proportion"]*100, 2)}</i></p>
             <p><i>Neutral %: ${round(feature.properties["Neutral Proportion"]*100, 2)}</i></p>
             <p><i>Negative %: ${round(feature.properties["Negative Proportion"]*100, 2)}</i></p>
@@ -82,9 +82,9 @@ export default function PostLgbtLayer(props) {
     const { BaseLayer } = LayersControl
 
     return(
-        <BaseLayer checked={checked} name="Postcode LGBT Sentiment">
-            {postData && (
-                <GeoJSON data={postData} key={"Proportional Sentiment"} style={getStyle}
+        <BaseLayer checked={checked} name="State War Sentiment">
+            {stateData && (
+                <GeoJSON data={stateData} key={"Positive Proportion"} style={getStyle}
                     onEachFeature={onEachFeature}
                 />
             )}

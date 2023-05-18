@@ -45,29 +45,29 @@ function Scenario2() {
   return (
     <>
     <PageTitle title="LGBT" />
-    <Container maxWidth="lg" style={{ marginTop: '50px' }}>
+    <Container maxWidth="lg" style={{ marginTop: '2em' }}>
       <div className='div--state-sent-map'>
         <Scenario2Map postData={postData}/>
       </div>
     </Container>
-    <Container style={{ marginTop: '50px', display: 'flex' }}>
-      <Grid container spacing={2} justify="center">
-          <Grid item>
+    <Container style={{ marginTop: '2em', display: 'flex' }}>
+      <Grid container spacing={2} justifyContent="center">
+          <Grid item xs={12} md={6} lg={4}>
             <Card>
               <StackedBarLangSent />
             </Card>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card>
               <BarAveLangSent />
             </Card>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card>
               <BarLang />
             </Card>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card>
               <PieLangPos />
             </Card>

@@ -29,7 +29,7 @@ export default function PieTotalSent() {
     
     return (
         <>
-        <PieChart width={300} height={300}>
+        <PieChart width={"0.75em"} height={"auto"}>
             <Pie data={RUwar} dataKey="count" nameKey="sentiment_type" cx="50%" cy="50%" outerRadius={50} fill="#8884d8" label
             />
         </PieChart>

@@ -14,34 +14,29 @@ import {
   Button } from "@mui/material";
 import PageTitle from "./PageTitle";
 import PieTotalSent from "./PieTotalSent";
-import PieTotalSent2 from "./PieTotalSent2";
+import { getData, getRUwarData } from "../functions/fetchData";
+import PieTotalWarSent from "./war/PieTotalWarSent";
 
 
 function Scenario1() {
+  const [stateData, setStateData] = useState(null)
   const [gccData, setGccData] = useState(null)
-  
-  async function getData(url, setData) {
-    const response = await fetch(url);
-    const json = await response.json()
-    setData(json)
-    console.log(json);
-    console.log("Fetch Scenario 1 complete")
-  }
+  const [ruWar, setRUwar] = useState(null)
 
   useEffect(() => {
-      getData('http://45.113.234.176:5000/sentiment/war_monthly_state_proportion', setGccData)
+      getData('http://45.113.234.176:5000/sentiment/state_sentiment', setStateData)
+      getData('http://45.113.234.176:5000/sentiment/gcc_sentiment', setGccData)
+      getRUwarData('http://45.113.234.176:5000/sentiment/RUwar', setRUwar)
   }, [])
 
   return (
     <>
     <PageTitle title="Ukraine Russia War" />
-    <Container maxWidth="lg" style={{ marginTop: '50px' }}>
-      <div className='div--state-sent-map'>
-        <Scenario1Map gccData={gccData} />
-      </div>
+    <Container maxWidth="lg" style={{ marginTop: '2em' }}>
+      <Scenario1Map stateData={stateData} gccData={gccData} />
     </Container>
-    <Container style={{ marginTop: '50px', display: 'flex' }}>
-      <Grid container spacing={2} justify="center">
+    <Container style={{ marginTop: '2em', display: 'flex' }}>
+      <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12} md={6} lg={4}>
             <Card>
               <StackedBarLangSent />
@@ -62,11 +57,14 @@ function Scenario1() {
               <PieLangPos />
             </Card>
           </Grid>
+          {
+          ruWar &&
           <Grid item xs={12} md={6} lg={4}>
             <Card>
-              <PieTotalSent2 />
+              <PieTotalWarSent data={ruWar}/>
             </Card>
           </Grid>
+          }
       </Grid>
     </Container>
     </>

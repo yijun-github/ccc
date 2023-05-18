@@ -38,7 +38,7 @@ export default function StackedBarLangSent() {
 
     return (
         <Container>
-            <ChartTitle title="Positive and Negative Sentiment by Language" />
+            <ChartTitle title="Sentiment by Language" />
             <BarChart
                 stackOffset="sign"
                 width={300}

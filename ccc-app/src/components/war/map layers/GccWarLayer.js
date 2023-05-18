@@ -2,7 +2,7 @@ import React from "react";
 import { GeoJSON, LayersControl } from "react-leaflet";
 import { geoJSON } from "leaflet";
 
-export default function PostLgbtLayer(props) {
+export default function GccWarLayer(props) {
 
     const checked = (props.checked ? true : false)
 
@@ -82,7 +82,7 @@ export default function PostLgbtLayer(props) {
     const { BaseLayer } = LayersControl
 
     return(
-        <BaseLayer checked={checked} name="Postcode LGBT Sentiment">
+        <BaseLayer checked={checked} name="Gcc War Sentiment">
             {postData && (
                 <GeoJSON data={postData} key={"Proportional Sentiment"} style={getStyle}
                     onEachFeature={onEachFeature}
