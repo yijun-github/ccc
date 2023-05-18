@@ -1,9 +1,14 @@
+Running app in development:
+
 `npm start`
 
-To use app with json-server:
-`json-server --watch ./src/data/langSentData.json --port 3001`
-`json-server --watch ./src/data/stateData.json --port 3002`
+For production build:
 
+`npm run build`
+
+`npm install -g serve`
+
+`serve -s build -l <Port>` (Without `-l <Port>`, app will default to port 3000)
 
 # Getting Started with Create React App
 
