@@ -20,29 +20,29 @@ function Scenario3() {
   return (
     <>
     <PageTitle title="Time" />
-    <Container maxWidth="lg" style={{ marginTop: '2em' }}>
+    <Container maxWidth="lg" style={{ marginTop: '0' }}>
       <div className='div--state-sent-map'>
         <Scenario1Map />
       </div>
     </Container>
     <Container style={{ marginTop: '2em', display: 'flex' }}>
       <Grid container spacing={2} justify="center">
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card>
               <StackedBarLangSent />
             </Card>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card>
               <BarAveLangSent />
             </Card>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={6} lg={4}>
             <Card>
               <BarLang />
             </Card>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={12} lg={8}>
             <Card>
               <LinesByHour />
             </Card>

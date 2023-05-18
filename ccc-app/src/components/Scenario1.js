@@ -32,7 +32,7 @@ function Scenario1() {
   return (
     <>
     <PageTitle title="Ukraine Russia War" />
-    <Container maxWidth="lg" style={{ marginTop: '2em' }}>
+    <Container maxWidth="lg" style={{ marginTop: '0' }}>
       <Scenario1Map stateData={stateData} gccData={gccData} />
     </Container>
     <Container style={{ marginTop: '2em', display: 'flex' }}>

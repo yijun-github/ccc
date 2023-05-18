@@ -2,6 +2,15 @@ import React from "react";
 import { Box, Card, CardContent, CardMedia, Container, Grid, Typography } from "@mui/material";
 import PageTitle from "./PageTitle";
 import TeamMemberCard from "./TeamMemberCard";
+import ScenarioCard from "./ScenarioCard"
+import PageSubtitle from "./PageSubtitle";
+
+import home_image from "../img/homeImage1.png"
+import ukraine_russia_flag from "../img/ukraine-russia-flag.jpg";
+import PS_photo from "../img/PS.jpg";
+import lgbtq_image from "../img/lgbtq-image.jpg";
+import time_image from "../img/time-image.jpg";
+import question_image from "../img/question-mark.png"
 
 
 export default function Home() {
@@ -22,23 +31,47 @@ export default function Home() {
                         height:"auto"
                     }}
                     alt="The house from the offer."
-                    src={require("../img/homeImage1.png")}
+                    src={home_image}
                 />
             </div>
         </Container>
-        <PageTitle title="Cloud Computing: Social Media Analytics" />
-        <Typography variant="h7">Home... Team Info, About the Project, etc.</Typography>
-        <Container>
-            <Typography variant="h4" align="center" gutterBottom>Project Info</Typography>
+        <PageTitle title="Cloud Computing: Analytics" />
+        <Container maxWidth="lg" style={{ marginTop: '2em' }}>
+            <Grid container spacing={2} justifyContent="center">
+                <Grid item xs={12} md={6} lg={4}>
+                    <ScenarioCard img={ukraine_russia_flag} title="Ukraine-Russia War" link="./Scenario1" />
+                </Grid>
+                <Grid item xs={12} md={6} lg={4}>
+                    <ScenarioCard img={lgbtq_image} title="LGBTQ" link="./Scenario2" />
+                </Grid>
+                <Grid item xs={12} md={6} lg={4}>
+                    <ScenarioCard img={time_image} title="Time" link="./Scenario3" />
+                </Grid>
+            </Grid>
+        </Container>
+        <Container maxWidth="lg" style={{ marginTop: '2em' }}>
+            <PageSubtitle subtitle="Project Info" />
             <Card>
             <Typography variant="h6" align="center" color="text.secondary" gutterBottom>........FILL IN INFO........</Typography>
             </Card>
         </Container>
-        <Container maxWidth="lg" style={{ marginTop: '50px' }}>
-            <Typography variant="h4" align="center" sx={{ marginBottom: "1.5em" }}>Team Members</Typography>
+        <Container maxWidth="lg" style={{ marginTop: '2em' }}>
+            <PageSubtitle subtitle="Team Members" />
             <Grid container spacing={2} justifyContent="center">
-                <Grid item xs={4} md={3} lg={2}>
-                    <TeamMemberCard img={"../img/PS.jpg"} firstName="Pavith" lastName="Samarakoon" />
+                <Grid item xs={6} md={4} lg={2}>
+                    <TeamMemberCard img={question_image} firstName="FirstName" lastName="LastName" />
+                </Grid>
+                <Grid item xs={6} md={4} lg={2}>
+                    <TeamMemberCard img={PS_photo} firstName="Pavith" lastName="Samarakoon" />
+                </Grid>
+                <Grid item xs={6} md={4} lg={2}>
+                    <TeamMemberCard img={question_image} firstName="FirstName" lastName="LastName" />
+                </Grid>
+                <Grid item xs={6} md={4} lg={2}>
+                    <TeamMemberCard img={question_image} firstName="FirstName" lastName="LastName" />
+                </Grid>
+                <Grid item xs={6} md={4} lg={2}>
+                    <TeamMemberCard img={question_image} firstName="FirstName" lastName="LastName" />
                 </Grid>
             </Grid>
         </Container>

@@ -10,7 +10,7 @@ import {
   Grid, Container } 
   from "@mui/material";
 import PageTitle from "./PageTitle";
-import Scenario2Map from "./lgbt/Scenario2Map";
+import Scenario2Map from "./lgbtq/Scenario2Map";
 
 
 function Scenario2() {
@@ -45,7 +45,7 @@ function Scenario2() {
   return (
     <>
     <PageTitle title="LGBT" />
-    <Container maxWidth="lg" style={{ marginTop: '2em' }}>
+    <Container maxWidth="lg" style={{ marginTop: '0' }}>
       <div className='div--state-sent-map'>
         <Scenario2Map postData={postData}/>
       </div>

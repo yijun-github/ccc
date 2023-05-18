@@ -14,11 +14,11 @@ export default function TeamMemberCard({ img, firstName, lastName }) {
         >
         <CardMedia
             component="img"
-            image={require("../img/PS.jpg")}
+            image={img}
             sx={{
-                borderRadius: '50%',
-                width:"10em",
-                height:"auto",
+                borderRadius: '3em',
+                width:"auto",
+                height:"10em",
                 margin: "1em"
             }}
         />
