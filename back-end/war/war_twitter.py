@@ -2,6 +2,7 @@ import json
 from flask import Flask, jsonify
 import couchdb
 from flask import Blueprint
+import re
 
 war_twitter_bp = Blueprint('war_twitter', __name__)
 
@@ -57,7 +58,6 @@ def get_points():
             "war_neu%": neu/total
         }
         data1[i] = new_item
-
     new_item1 = {
             "war_total": None,
             "war_ave_mag": None,
@@ -269,20 +269,28 @@ def get_points3():
             "war_neu%": None
         }
     for feature in sudo_suburb_geo['features']:
-        if feature["properties"]["SAL_NAME21"].lower() not in all_suburb:
+        suburb_name = feature["properties"]["SAL_NAME21"].lower()
+        suburb_name = re.sub(r'\([^)]*\)', '', suburb_name)
+        suburb_name = suburb_name.replace(" ", "")
+        if suburb_name not in all_suburb:
             for j in new_item1:
                 feature["properties"][j] = new_item1[j]
         for row in data1:
-            if row in feature["properties"]["SAL_NAME21"].lower():
-                
+            if row in suburb_name:
                 for i in data1[row]:
                     feature["properties"][i] = data1[row][i]
-
 
     with open('back-end/geojson output/war_suburb.json', 'w') as file:
         json.dump(sudo_suburb_geo, file)
     with open('back-end/geojson output/war_suburb.json', 'r') as f:
         geo = json.load(f)
+    """
+    ww=0
+    for g in geo["features"]:
+        if g["properties"]["war_neu%"] is not None:
+            ww+=1
+    print(ww)
+    """
     return jsonify(geo)
 
 # sentiment_language
@@ -305,12 +313,12 @@ def get_points4():
         pos = 0
         neu = 0
         total = 0
-        sen = 0
+        num = 0
         mag = 0
         for j in data:
             if j.key[0] == i:
                 total += j.value["count"]
-                sen += j.value["sentiment"]
+                num += 1
                 mag += j.value["average_magnitude"]
                 if j.key[1] == "positive":
                     pos += j.value["count"]
@@ -327,8 +335,7 @@ def get_points4():
             "neg%": neg/total,
             "neu%": neu/total,
             "pos%": pos/total,
-            "ave_sen": sen/3,
-            "ave_mag": mag/3
+            "ave_mag": mag/num
             
         }
         data1[i] = new_item
