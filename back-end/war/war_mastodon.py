@@ -7,7 +7,6 @@ cors = CORS(app)
 # connecting CouchDB
 couch = couchdb.Server('http://admin:1dTY1!PWM2@172.26.133.51:5984/')
 db = couch['mastodon_data_v3']
-db2 = couch['mastodon_data_v2']
 
 # proportion_sentiment
 @app.route('/war/mastondon/proportion_sentiment')
@@ -18,10 +17,10 @@ def get_data():
         data[row.key] = row.value
     return jsonify(data)
 
-# proportion_sentiment_lang
-@app.route('/war/mastondon/mag_sen_lang')
+# sentiment_lang
+@app.route('/war/mastondon/sentiment_lang')
 def get_data2():
-    results = db2.view('_design/sentiment/_view/sentiment_language_RUwar', group=True)
+    results = db.view('_design/war_sentiment/_view/proportion_sentiment_lang', group=True)
     results2 = db.view('_design/war_sentiment/_view/magnitude_sentiment_lang', group=True)
     
     data = []
@@ -66,7 +65,6 @@ def get_data2():
                 data1[j]["ave_mag"] = row.value["average_magnitude"]
         
     return jsonify(data1)
-
 
 if __name__ == '__main__':
     app.run(debug=True) 

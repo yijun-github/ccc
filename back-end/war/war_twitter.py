@@ -26,7 +26,107 @@ with open('geoJSON files/postcode/POA_2021_AUST_GDA2020_Medium.json', 'r') as fi
 with open('geoJSON files/suburbs/SAL_2021_AUST_GDA94_Small.json', 'r') as file4:
         suburb_geo = json.load(file4)
 
-# war: state sentiment
+
+#  monthly_state_sentiment
+@app.route('/war/twitter/monthly_state_sentiment')
+def get_data5():
+    results = db.view('_design/sentiment/_view/war_monthly_state_proportion', group=True)
+
+    data = []
+    all_state = []
+    for row in results:
+        if row.key[1] == None:
+            continue
+        if row.key[1] not in all_state:
+            all_state.append(row.key[1])
+        data.append(row)
+
+    data1 = {}
+    data2 = {}
+    for i in all_state:
+        all_month = []
+        for j in data:
+            if j.key[1] ==i:
+                if j.key[0] not in all_month:
+                    all_month.append(j.key[0])
+        
+        for month in all_month:
+            neg = 0
+            pos = 0
+            neu = 0
+            total = 0
+            sen = 0
+            mag = 0
+            for j in data:
+                if j.key[0] == month and j.key[1] == i:
+                    total += j.value["count"]
+                    sen += j.value["sentiment"]
+                    mag += j.value["average_magnitude"]
+                    if j.key[2] == "Positive":
+                        pos += j.value["count"]
+                    if j.key[2] == "Negative":
+                        neg += j.value["count"]
+                    if j.key[2] == "Neutral":
+                        neu += j.value["count"]
+            if total == 0:
+                new_item = {
+                "pos": pos,
+                "neu": neu,
+                "neg": neg,
+                "total": total,
+                "neg%": 0,
+                "neu%": 0,
+                "pos%": 0,
+                "ave_sen": sen/3,
+                "ave_mag": mag/3
+            }
+            else:
+             new_item = {
+                "pos": pos,
+                "neu": neu,
+                "neg": neg,
+                "total": total,
+                "neg%": neg/total,
+                "neu%": neu/total,
+                "pos%": pos/total,
+                "ave_sen": sen/3,
+                "ave_mag": mag/3
+            }
+            data1[month] = new_item
+
+        data2[i] = data1
+
+    with open('back-end/json output/json_output_monthly_state_sentiment_war.json', 'w') as f:
+        json.dump(data1, f)
+
+    new_item1 = {
+            "neg_sen": None,
+            "pos_sen": None,
+            "neu_sen": None,
+            "total": None,
+            "ave_sen": None,
+            "ave_mag": None,
+            "neg%": None,
+            "pos%": None,
+            "neu%": None
+        }
+    
+    for feature in sudo_state_geo['features']:
+        if feature["properties"]["STE_NAME21"].lower() not in all_state:
+            for j in new_item1:
+                feature["properties"][j] = new_item1[j]
+        for row in data2:
+            if feature["properties"]["STE_NAME21"].lower() == row:
+                for i in data2[row]:
+                    feature["properties"][i] = data2[row][i]
+
+    with open('back-end/geojson output/geo_output_monthly_state_sentiment_war.json', 'w') as file:
+        json.dump(sudo_state_geo, file)
+    with open('back-end/geojson output/geo_output_monthly_state_sentiment_war.json', 'r') as f:
+        geo = json.load(f)
+    return jsonify(geo)
+
+# state sentiment
 @app.route('/war/twitter/state_sentiment')
 def get_points():
     results = db.view('_design/sentiment/_view/sentiment_state', group=True)
@@ -105,7 +205,7 @@ def get_points():
         geo = json.load(f)
     return jsonify(geo)
 
-# war: postcode sentiment
+# postcode sentiment
 @app.route('/war/twitter/postcode_sentiment')
 def get_points2():
     results = db.view('_design/sentiment/_view/war_postcode', group=True)
@@ -179,7 +279,7 @@ def get_points2():
         geo = json.load(f)
     return jsonify(geo)
 
-# war: suburb sentiment
+# suburb sentiment
 @app.route('/war/twitter/suburb_sentiment')
 def get_points3():
     results = db.view('_design/sentiment/_view/suburb_sentiment', group=True)
@@ -258,6 +358,54 @@ def get_points3():
         geo = json.load(f)
     return jsonify(geo)
 
+# sentiment_language
+@app.route('/war/twitter/sentiment_language')
+def get_points4():
+    results = db.view('_design/sentiment/_view/sentiment_language', group=True)
     
+    data = []
+    all_language = []
+    for row in results:
+        if row.key[0] == None:
+            continue
+        if row.key[0] not in all_language:
+            all_language.append(row.key[0])
+        data.append(row)
+
+    data1 = {}
+    for i in all_language:
+        neg = 0
+        pos = 0
+        neu = 0
+        total = 0
+        sen = 0
+        mag = 0
+        for j in data:
+            if j.key[0] == i:
+                total += j.value["count"]
+                sen += j.value["sentiment"]
+                mag += j.value["average_magnitude"]
+                if j.key[1] == "positive":
+                    pos += j.value["count"]
+                if j.key[1] == "negative":
+                    neg += j.value["count"]
+                if j.key[1] == "neutral":
+                    neu += j.value["count"]
+        
+        new_item = {
+            "pos": pos,
+            "neu": neu,
+            "neg": neg,
+            "total": total,
+            "neg%": neg/total,
+            "neu%": neu/total,
+            "pos%": pos/total,
+            "ave_sen": sen/3,
+            "ave_mag": mag/3
+            
+        }
+        data1[i] = new_item
+    return jsonify(data1)
+
 if __name__ == '__main__':
     app.run(debug=True) 
