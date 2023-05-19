@@ -124,6 +124,7 @@ def get_points5():
                         neg += j.value["count"]
                     if j.key[2] == "Neutral":
                         neu += j.value["count"]
+                    #test.append(total)
             if total == 0:
                 new_item = {
                 "pos": pos,
@@ -148,9 +149,9 @@ def get_points5():
                 "ave_sen": sen/3,
                 "ave_mag": mag/3
             }
-            data1[month] = new_item
+            data1[month] = new_item.copy()
 
-        data2[i] = data1
+        data2[i] = data1.copy()
     return data2
 # postcode sentiment
 @war_twitter_bp.route('/war/twitter/postcode_sentiment')
