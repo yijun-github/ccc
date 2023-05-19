@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Scenario1Map from "./war/Scenario1Map";
 import StackedBarLangSent from "./StackedBarLangSent";
 import BarAveLangSent from "./BarAveLangSent";
@@ -7,16 +7,30 @@ import PieLangPos from "./PieLangPos";
 import LinesByHour from "./general/LinesByHour";
 
 import { 
-  Typography, AppBar,
-  Card, CardActions,
-  CardContent, CardMedia,
-  CssBaseline, Grid,
-  Toolbar, Container,
-  Button } from "@mui/material";
+  Typography, Card,
+  CardContent, Grid,
+  Container } from "@mui/material";
 import PageTitle from "./PageTitle";
+import { getData, getDayNightData } from "../functions/fetchData";
+import BarLangDayNight from "./general/BarLangDayNight";
+import BarLangDayNightSortLang from "./general/BarLangDayNightSortLang";
+import ChartTitle from "./ChartTitle";
 
 
 function Scenario3() {
+
+  const [stateHourly, setStateHourly] = useState(null)
+  const [langHourly, setLangHourly] = useState(null)
+  const [langDayNight, setLangDayNight] = useState(null)
+  const [mastHourSent, setMastHourSent] = useState(null)
+
+  useEffect(() => {
+    getData('http://127.0.0.1:5000/general/twitter/state_hourly_tweet', setStateHourly)
+    getData('http://127.0.0.1:5000/general/twitter/language_hour', setLangHourly)
+    getDayNightData('http://127.0.0.1:5000/general/tweet_lang_hourRange', setLangDayNight)
+    getData('http://127.0.0.1:5000/general/mastondon/proportion_sentiment', setMastHourSent)
+  }, [])
+
   return (
     <>
     <PageTitle title="Time" />
@@ -26,27 +40,55 @@ function Scenario3() {
       </div>
     </Container>
     <Container style={{ marginTop: '2em', display: 'flex' }}>
-      <Grid container spacing={2} justify="center">
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
-              <StackedBarLangSent />
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
-              <BarAveLangSent />
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
-              <BarLang />
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={12} lg={8}>
-            <Card>
+      <Grid container spacing={2} justifyContent="center">
+        <Grid item xs={12} md={12} lg={8}>
+          <Card justifyContent="center">
+            <CardContent>
               <LinesByHour />
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <Card justifyContent="center">
+            <CardContent>
+              <StackedBarLangSent />
+            </CardContent>
+          </Card>
+        </Grid>
+        {
+          langDayNight &&
+          <>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <BarLangDayNight data={langDayNight}/>
+              </CardContent>
             </Card>
           </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <ChartTitle title="Day/Night Tweets (sort Language)" />
+                <BarLangDayNightSortLang data={langDayNight}/>
+              </CardContent>
+            </Card>
+          </Grid>
+          </>
+        }
+        <Grid item xs={12} md={6} lg={4}>
+          <Card justifyContent="center">
+            <CardContent>
+              <BarAveLangSent />
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <Card justifyContent="center">
+            <CardContent>
+              <BarLang />
+            </CardContent>
+          </Card>
+        </Grid>
       </Grid>
     </Container>
     </>

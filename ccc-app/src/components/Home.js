@@ -56,13 +56,13 @@ export default function Home() {
                     <TeamMemberCard img={PS_photo} firstName="Pavith" lastName="Samarakoon" />
                 </Grid>
                 <Grid item xs={6} md={4} lg={2}>
-                    <TeamMemberCard img={question_image} firstName="FirstName" lastName="LastName" />
+                    <TeamMemberCard img={question_image} firstName="Zhihao" lastName="Liang" />
                 </Grid>
                 <Grid item xs={6} md={4} lg={2}>
-                    <TeamMemberCard img={question_image} firstName="FirstName" lastName="LastName" />
+                    <TeamMemberCard img={question_image} firstName="Yijun" lastName="Liu" />
                 </Grid>
                 <Grid item xs={6} md={4} lg={2}>
-                    <TeamMemberCard img={question_image} firstName="FirstName" lastName="LastName" />
+                    <TeamMemberCard img={question_image} firstName="Jiqiang" lastName="Chen" />
                 </Grid>
             </Grid>
         </Container>

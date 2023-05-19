@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, LayersControl } from "react-leaflet";
 
 
-import StateParty1Layer from "./map layers/StateParty1Layer";
-import StateParty2Layer from "./map layers/StateParty2Layer";
+import StateElectionLayer from "../politicsMapLayers/StateElectionLayer";
 import MapTileLayers from "../MapTileLayers";
-import GccWarLayer from "./map layers/GccWarLayer";
+import SuburbWarLayer from "./map layers/SuburbWarLayer";
 import StateWarLayer from "./map layers/StateWarLayer";
+import SuburbElectionLayer from "../politicsMapLayers/SuburbElectionLayer";
 
-export default function Scenario1Map({ stateData, gccData }) {
+export default function Scenario1Map({ stateData, suburbData }) {
     const mapStyle = {
         height: '100vh',
         width: '100%',
@@ -26,13 +26,13 @@ export default function Scenario1Map({ stateData, gccData }) {
                     { stateData &&
                     <>
                         <StateWarLayer data={stateData} checked={true} />
-                        <StateParty1Layer data={stateData} />
-                        <StateParty2Layer data={stateData} />
+                        <StateElectionLayer data={stateData} />
                     </>
                     }
-                    { gccData &&
+                    { suburbData &&
                     <>
-                        <GccWarLayer data={gccData} />
+                        <SuburbWarLayer data={suburbData} />
+                        <SuburbElectionLayer data={suburbData} />
                     </>
                     }
                     </LayersControl>

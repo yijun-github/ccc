@@ -7,8 +7,8 @@ import PieLangPos from "./PieLangPos";
 
 import { 
   Typography, Card,
-  Grid, Container } 
-  from "@mui/material";
+  CardContent, Grid, 
+  Container } from "@mui/material";
 import PageTitle from "./PageTitle";
 import Scenario2Map from "./lgbtq/Scenario2Map";
 
@@ -52,24 +52,32 @@ function Scenario2() {
     </Container>
     <Container style={{ marginTop: '2em', display: 'flex' }}>
       <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
-              <StackedBarLangSent />
+      <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <StackedBarLangSent />
+              </CardContent>
             </Card>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
-            <Card>
-              <BarAveLangSent />
+            <Card justifyContent="center">
+              <CardContent>
+                <BarAveLangSent />
+              </CardContent>
             </Card>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
-            <Card>
-              <BarLang />
+            <Card justifyContent="center">
+              <CardContent>
+                <BarLang />
+              </CardContent>
             </Card>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
-            <Card>
-              <PieLangPos />
+            <Card justifyContent="center">
+              <CardContent>
+                <PieLangPos />
+              </CardContent>
             </Card>
           </Grid>
       </Grid>

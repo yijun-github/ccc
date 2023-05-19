@@ -2,7 +2,7 @@ import React from "react";
 import { GeoJSON, LayersControl } from "react-leaflet";
 import { geoJSON } from "leaflet";
 
-export default function StateWarLayer(props) {
+export default function StateElectionLayer(props) {
 
     const checked = (props.checked ? true : false)
 
@@ -12,7 +12,7 @@ export default function StateWarLayer(props) {
         const colors = ['#a50026','#d73027','#f46d43','#fdae61','#fee090','#ffffbf',
                         '#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'] //Diverging-Red-Blu
 
-        const range = 0.7
+        const range = 0.1
         const mid = 0.5
         const val = (x-mid)/range + 0.5
 
@@ -26,11 +26,11 @@ export default function StateWarLayer(props) {
 
     function getStyle(feature) {
         
-        const fillColor = (feature.properties.war_total >= 1) ? 
-            getColor(feature.properties["war_pos%"]+feature.properties["war_neu%"]/2) :
+        const fillColor = (feature.properties.total_formal_votes >= 1) ? 
+            getColor(feature.properties["liberal_national%"]) :
             "#000"
         
-        const fillOpacity = (feature.properties.war_total >= 1) ? 0.7 : 0
+        const fillOpacity = (feature.properties.total_formal_votes >= 1) ? 0.7 : 0
 
         return {
             fillColor: fillColor,
@@ -48,13 +48,12 @@ export default function StateWarLayer(props) {
 
     function popup(feature, layer) {
         var popUpText = `<div style={text-align: center, margin: 5px}>
-            <b>State: ${feature.properties.STE_NAME21}</b>
-            <p><i>Positive %: ${round(feature.properties["war_pos%"]*100, 2)}</i></p>
-            <p><i>Neutral %: ${round(feature.properties["war_neu%"]*100, 2)}</i></p>
-            <p><i>Negative %: ${round(feature.properties["war_neg%"]*100, 2)}</i></p>
-            <p><i>Total: ${feature.properties["war_total"]}</i></p>
+            <b>State/Territory: ${feature.properties.STE_NAME21}</b>
+            <p><i>Liberal National %: ${round(feature.properties["liberal_national%"]*100, 2)}</i></p>
+            <p><i>Labor %: ${round(feature.properties["labor%"]*100, 2)}</i></p>
+            <p><i>Total Votes: ${feature.properties["total_formal_votes"]}</i></p>
             </div>`
-        if (feature.properties && (feature.properties["war_total"] !== null)) {
+        if (feature.properties && (feature.properties["liberal_national%"] !== undefined)) {
             layer.bindPopup(popUpText);
         }
     }
@@ -73,7 +72,7 @@ export default function StateWarLayer(props) {
 
     function outFeature(e, layer) {
         layer.closePopup()
-    
+
         e.target.bringToFront();
     }
 
@@ -90,9 +89,9 @@ export default function StateWarLayer(props) {
     const { BaseLayer } = LayersControl
 
     return(
-        <BaseLayer checked={checked} name="State War Sentiment">
+        <BaseLayer checked={checked} name="State Election (2 Party) Results">
             {stateData && (
-                <GeoJSON data={stateData} key={"war_pos%"} style={getStyle}
+                <GeoJSON data={stateData} key={"liberal_national%"} style={getStyle}
                     onEachFeature={onEachFeature}
                 />
             )}

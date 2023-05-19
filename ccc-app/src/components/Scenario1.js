@@ -6,65 +6,83 @@ import BarLang from "./BarLang";
 import PieLangPos from "./PieLangPos";
 
 import { 
-  Typography, AppBar,
-  Card, CardActions,
-  CardContent, CardMedia,
-  CssBaseline, Grid,
-  Toolbar, Container,
-  Button } from "@mui/material";
+  Typography, Card, 
+  CardContent, Grid,
+  Container } from "@mui/material";
 import PageTitle from "./PageTitle";
 import PieTotalSent from "./PieTotalSent";
-import { getData, getRUwarData } from "../functions/fetchData";
+import { getData, getLangSentData, getRUwarData } from "../functions/fetchData";
 import PieTotalWarSent from "./war/PieTotalWarSent";
+import LinesStateMonth from "./war/LinesStateMonth";
 
 
-function Scenario1() {
-  const [stateData, setStateData] = useState(null)
-  const [gccData, setGccData] = useState(null)
+function Scenario1({ stateData=null, suburbData=null, landSent=null }) {
+
+  const [stateMonthly, setStateMonthly] = useState(null)
   const [ruWar, setRUwar] = useState(null)
+  const [mastLangSent, setMastLangSent] = useState(null)
 
   useEffect(() => {
-      getData('http://45.113.234.176:5000/sentiment/state_sentiment', setStateData)
-      getData('http://45.113.234.176:5000/sentiment/gcc_sentiment', setGccData)
-      getRUwarData('http://45.113.234.176:5000/sentiment/RUwar', setRUwar)
+      getData('http://127.0.0.1:5000/war/twitter/monthly_state_sentiment', setStateMonthly)
+      getData('http://127.0.0.1:5000/war/mastondon/sentiment_lang', setMastLangSent)
   }, [])
 
   return (
     <>
     <PageTitle title="Ukraine Russia War" />
     <Container maxWidth="lg" style={{ marginTop: '0' }}>
-      <Scenario1Map stateData={stateData} gccData={gccData} />
+      <Scenario1Map stateData={stateData} suburbData={suburbData} />
     </Container>
     <Container style={{ marginTop: '2em', display: 'flex' }}>
       <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
+        {
+          stateMonthly &&
+          <Grid item xs={12} md={12} lg={8}>
+            <Card justifyContent="center">
+              <CardContent>
+                <LinesStateMonth data={stateMonthly} />
+              </CardContent>
+            </Card>
+          </Grid>
+        }
+        <Grid item xs={12} md={6} lg={4}>
+          <Card justifyContent="center">
+            <CardContent>
               <StackedBarLangSent />
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <Card justifyContent="center">
+            <CardContent>
               <BarAveLangSent />
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <Card justifyContent="center">
+            <CardContent>
               <BarLang />
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <Card justifyContent="center">
+            <CardContent>
               <PieLangPos />
-            </Card>
-          </Grid>
-          {
-          ruWar &&
-          <Grid item xs={12} md={6} lg={4}>
-            <Card>
+            </CardContent>
+          </Card>
+        </Grid>
+        {
+        ruWar &&
+        <Grid item xs={12} md={6} lg={4}>
+          <Card justifyContent="center">
+            <CardContent>
               <PieTotalWarSent data={ruWar}/>
-            </Card>
-          </Grid>
-          }
+            </CardContent>
+          </Card>
+        </Grid>
+        }
       </Grid>
     </Container>
     </>

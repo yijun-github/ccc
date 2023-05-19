@@ -84,7 +84,7 @@ export default function PostLgbtLayer(props) {
     return(
         <BaseLayer checked={checked} name="Postcode LGBT Sentiment">
             {postData && (
-                <GeoJSON data={postData} key={"Proportional Sentiment"} style={getStyle}
+                <GeoJSON data={postData} key={"Positive Proportion"} style={getStyle}
                     onEachFeature={onEachFeature}
                 />
             )}

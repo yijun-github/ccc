@@ -6,11 +6,11 @@ import { NavLink } from "react-router-dom";
 export default function ScenarioCard({ img, title, link }) {
     return (
     <CardActionArea component={NavLink} to={link}>
-        <Card justifyContent="center" style={{ borderRadius: '0.5em' }}>
+        <Card justifyContent="center" style={{ borderRadius: '1em' }}>
             <div
                 style={{
                     display: "flex",
-                    alignItem: "center",
+                    alignItems: "center",
                     justifyContent: "center"
                 }}
             >
@@ -18,7 +18,7 @@ export default function ScenarioCard({ img, title, link }) {
                 component="img"
                 image={img}
                 sx={{
-                    borderRadius: '0.5em 0.5em 0 0',
+                    borderRadius: '1em 1em 0 0',
                     width:"100%",
                     height:"20em",
                     margin: 0
@@ -27,7 +27,7 @@ export default function ScenarioCard({ img, title, link }) {
             </div>
             <CardContent style={{ 
                 background: "black",
-                borderRadius: '0 0 0.5em 0.5em',
+                borderRadius: '0 0 1em 1em',
                 width:"100%" }}>
                 <Typography variant="h5" color="white" align="center">
                     {title}

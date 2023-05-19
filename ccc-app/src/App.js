@@ -10,8 +10,17 @@ import NotFound from './components/NotFound';
 import Home from './components/Home';
 import SideNav from './components/SideNav';
 import ScrollToTop from './components/ScrollToTop';
+import { getData } from './functions/fetchData';
 
 function App() {
+
+  const [stateData, setStateData] = useState(null)
+  const [suburbData, setSuburbData] = useState(null)
+
+  useEffect(() => {
+      getData('http://127.0.0.1:5000/war/twitter/state_sentiment', setStateData)
+      getData('http://127.0.0.1:5000/war/twitter/suburb_sentiment', setSuburbData)
+  }, [])
   
   return (
     <>
@@ -26,8 +35,8 @@ function App() {
         <Toolbar />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/Scenario1' element={<Scenario1 />} />
-          <Route path='/Scenario2' element={<Scenario2 />} />
+          <Route path='/Scenario1' element={<Scenario1 stateData={stateData} suburbData={suburbData} />} />
+          <Route path='/Scenario2' element={<Scenario2 stateData={stateData} suburbData={suburbData} />} />
           <Route path='/Scenario3' element={<Scenario3 />} />
           <Route path='*' element={<NotFound />} />
         </Routes>

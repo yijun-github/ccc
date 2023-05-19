@@ -1,4 +1,4 @@
-{/* fetch JSON files */}
+// Fetch any JSON files
 export function getData(url, setData) {
     fetch(url, { 
       header:{
@@ -18,7 +18,39 @@ export function getData(url, setData) {
     });
 }
 
-{/* Fetch total war sentiment */}
+
+// Fetch language sentiment data
+export function getLangSentData(url, setData) {
+  fetch(url, {
+      mode: 'cors',
+      header:{
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+      }
+  })
+  .then((res) => res.json())
+  .then((data) => Object.keys(data).map(key => {
+      data[key].language = key
+      return(data[key])
+      })
+  )
+  .then((data) => {
+      data.sort((a, b) => b.total-a.total)
+      return (data)
+  })
+  .then((data) => {
+      setData(data)
+      console.log(data)
+      console.log(`Fetch ${url} complete`)
+  })
+  .catch(err => {
+      console.log('======failed to fetch data=======');
+      console.log(err);
+  })
+}
+
+
+// Fetch total war sentiment
 export function getRUwarData(url, setData) {
     fetch(url, {
         mode: 'cors',
@@ -29,9 +61,46 @@ export function getRUwarData(url, setData) {
     })
     .then((res) => res.json())
     .then((data) => Object.keys(data).map(key => ({"sentiment_type": key, "count": data[key]})))
-    .then((data) => {setData(data)})
+    .then((data) => {
+        setData(data)
+        console.log(data)
+        console.log(`Fetch ${url} complete`)
+    })
     .catch(err => {
         console.log('======failed to fetch data=======');
         console.log(err);
     })
-  }
+}
+
+// Fetch day and night count data (and calculate total)
+export function getDayNightData(url, setData) {
+    fetch(url, {
+        mode: 'cors',
+        header:{
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    .then((res) => res.json())
+    .then((data) => Object.keys(data).map(key => (
+        {
+          "language": key,
+          "day": data[key].day, 
+          "night": data[key].night
+        }
+      ))
+    )
+    .then((data) => {
+        data.sort((a, b) => ((b.day+b.night)-(a.day+a.night)))
+        return (data)
+    })
+    .then((data) => {
+        setData(data)
+        console.log(data)
+        console.log(`Fetch ${url} complete`)
+    })
+    .catch(err => {
+        console.log('======failed to fetch data=======');
+        console.log(err);
+    })
+}

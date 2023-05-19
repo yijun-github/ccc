@@ -2,17 +2,17 @@ import React from "react";
 import { GeoJSON, LayersControl } from "react-leaflet";
 import { geoJSON } from "leaflet";
 
-export default function StateWarLayer(props) {
+export default function SuburbWarLayer(props) {
 
     const checked = (props.checked ? true : false)
 
-    const stateData = props.data
+    const suburbData = props.data
 
     function getColor(x) {
         const colors = ['#a50026','#d73027','#f46d43','#fdae61','#fee090','#ffffbf',
                         '#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'] //Diverging-Red-Blu
 
-        const range = 0.7
+        const range = 0.8
         const mid = 0.5
         const val = (x-mid)/range + 0.5
 
@@ -34,9 +34,9 @@ export default function StateWarLayer(props) {
 
         return {
             fillColor: fillColor,
-            weight: 1,
-            opacity: 1,
-            color: "white",
+            weight: 0.3,
+            opacity: 0.2,
+            color: "black",
             dashArray: '3',
             fillOpacity: fillOpacity
         };
@@ -48,13 +48,13 @@ export default function StateWarLayer(props) {
 
     function popup(feature, layer) {
         var popUpText = `<div style={text-align: center, margin: 5px}>
-            <b>State: ${feature.properties.STE_NAME21}</b>
+            <b>Suburb: ${feature.properties.SAL_NAME21}</b>
             <p><i>Positive %: ${round(feature.properties["war_pos%"]*100, 2)}</i></p>
             <p><i>Neutral %: ${round(feature.properties["war_neu%"]*100, 2)}</i></p>
             <p><i>Negative %: ${round(feature.properties["war_neg%"]*100, 2)}</i></p>
             <p><i>Total: ${feature.properties["war_total"]}</i></p>
             </div>`
-        if (feature.properties && (feature.properties["war_total"] !== null)) {
+        if (feature.properties && (feature.properties["war_total"] != null)) {
             layer.bindPopup(popUpText);
         }
     }
@@ -90,9 +90,9 @@ export default function StateWarLayer(props) {
     const { BaseLayer } = LayersControl
 
     return(
-        <BaseLayer checked={checked} name="State War Sentiment">
-            {stateData && (
-                <GeoJSON data={stateData} key={"war_pos%"} style={getStyle}
+        <BaseLayer checked={checked} name="Suburb War Sentiment">
+            {suburbData && (
+                <GeoJSON data={suburbData} key={"war_total"} style={getStyle}
                     onEachFeature={onEachFeature}
                 />
             )}

@@ -1,5 +1,4 @@
 import React from "react";
-import { Matrix, LogisticRegression } from 'ml-logistic-regression';
 
 
 export default function LogRegression() {

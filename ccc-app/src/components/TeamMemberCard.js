@@ -8,7 +8,7 @@ export default function TeamMemberCard({ img, firstName, lastName }) {
         <div
             style={{
                 display: "flex",
-                alignItem: "center",
+                alignItems: "center",
                 justifyContent: "center"
             }}
         >
@@ -17,7 +17,7 @@ export default function TeamMemberCard({ img, firstName, lastName }) {
             image={img}
             sx={{
                 borderRadius: '50%',
-                width:"auto",
+                width:"10em",
                 height:"10em",
                 margin: "1em"
             }}
