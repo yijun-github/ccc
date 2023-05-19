@@ -281,37 +281,70 @@ def get_data15():
     results = db.view('_design/sentiment/_view/war_monthly_state_proportion', group=True)
 
     data = []
-    all_month = []
+    all_state = []
     for row in results:
-        if row.key[0] == None:
+        if row.key[1] == None:
             continue
-        if row.key[0] not in all_month:
-            all_month.append(row.key[0])
+        if row.key[1] not in all_state:
+            all_state.append(row.key[1])
         data.append(row)
 
     data1 = {}
-    for i in all_month:
-        dic = {}
-        all_state = []
-        for jj in data:
-            if jj.key[0] ==i:
-                if jj.key[1] == None:
-                    continue
-                if jj.key[1] not in all_state:
-                    all_state.append(jj.key[1])
+    data2 = {}
+    for i in all_state:
+        all_month = []
+        for j in data:
+            if j.key[1] ==i:
+                if j.key[0] not in all_month:
+                    all_month.append(j.key[0])
         
-        for g in all_state:
-            new = {"Negative":0,"Neutral":0, "Positive":0}
+        for month in all_month:
+            neg = 0
+            pos = 0
+            neu = 0
+            total = 0
+            sen = 0
+            mag = 0
             for j in data:
-                if j.key[1] == None:
-                    continue
-                if j.key[0] == i and j.key[1] == g:
-                    new[j.key[2]] += j.value
-            dic[g] = new
+                if j.key[0] == month and j.key[1] == i:
+                    total += j.value["count"]
+                    sen += j.value["sentiment"]
+                    mag += j.value["average_magnitude"]
+                    if j.key[2] == "Positive":
+                        pos += j.value["count"]
+                    if j.key[2] == "Negative":
+                        neg += j.value["count"]
+                    if j.key[2] == "Neutral":
+                        neu += j.value["count"]
+            if total == 0:
+                new_item = {
+                "pos": pos,
+                "neu": neu,
+                "neg": neg,
+                "total": total,
+                "neg%": 0,
+                "neu%": 0,
+                "pos%": 0,
+                "ave_sen": sen/3,
+                "ave_mag": mag/3
+            }
+            else:
+             new_item = {
+                "pos": pos,
+                "neu": neu,
+                "neg": neg,
+                "total": total,
+                "neg%": neg/total,
+                "neu%": neu/total,
+                "pos%": pos/total,
+                "ave_sen": sen/3,
+                "ave_mag": mag/3
+            }
+            data1[month] = new_item
 
-        data1[i] = dic
+        data2[i] = data1
 
-    return jsonify(data1)
+    return jsonify(data2)
 
 # sentiment: magnitude of sentiment by state
 @app.route('/sentiment/mag_sentiment_state')

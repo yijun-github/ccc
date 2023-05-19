@@ -14,17 +14,8 @@ with open('Data/geoJSON_data/state.json', 'r') as f:
 with open('Data/geoJSON_data/postcode.json', 'r') as f1:
         sudo_postcode_geo = json.load(f1)    
 with open('Data/geoJSON_data/suburb.json', 'r') as f2:
-        sudo_suburb_geo = json.load(f2)    
+        sudo_suburb_geo = json.load(f2)   
 
-
-with open('geoJSON files/states/STE_2021_AUST_GDA2020_Simplified.json', 'r') as file:
-        state_geo = json.load(file)
-with open('geoJSON files/gcc/GCCSA_2021_AUST_GDA2020.json', 'r') as file2:
-        gcc_geo = json.load(file2)
-with open('geoJSON files/postcode/POA_2021_AUST_GDA2020_Medium.json', 'r') as file3:
-        postcode_geo = json.load(file3)
-with open('geoJSON files/suburbs/SAL_2021_AUST_GDA94_Small.json', 'r') as file4:
-        suburb_geo = json.load(file4)
 
 # general: language hour
 @app.route('/general/twitter/language_hour')
@@ -42,10 +33,13 @@ def get_data():
 
     data1 = {}
     for i in all_language:
-        new = {}
+        new = {"day": 0, "night": 0}
         for j in data:
             if j.key[0] == i:
-                new[j.key[1]] = j.value
+                if j.key[1] in ["22","23", "00", "01", "02", "03", "04", "05"]:
+                     new["night"] += j.value
+                else:
+                     new["day"] += j.value
         data1[i] = new
     return jsonify(data1)
 
@@ -56,7 +50,6 @@ def get_data2():
 
     data = []
     all_state = []
-    output = {"type": "FeatureCollection","features": []}
     for row in results:
         if row.key[0] == None:
             continue
@@ -66,23 +59,35 @@ def get_data2():
 
     data1 = {}
     for i in all_state:
-        dic = {}
+        new = {"day": 0, "night": 0}
         for j in data:
             if j.key[0] ==i:
-                dic[j.key[1]]=j.value
-        data1[i] = dic
+                if j.key[1] in ["22","23", "00", "01", "02", "03", "04", "05"]:
+                     new["night"] += j.value
+                else:
+                     new["day"] += j.value
+        data1[i] = new
+    
 
-    for feature in state_geo['features']:
+    new_item1 = {
+            "day": None,
+            "night": None
+        }
+    
+    for feature in sudo_state_geo['features']:
+        if feature["properties"]["STE_NAME21"].lower() not in all_state:
+            for j in new_item1:
+                feature["properties"][j] = new_item1[j]
         for row in data1:
-            if feature["properties"]["STE_NAME21"].lower() == row:
+            if feature["properties"]["STE_NAME21"].lower() == row:        
                 for i in data1[row]:
                     feature["properties"][i] = data1[row][i]
-                output["features"].append(feature)
 
-    with open('back-end/geojson output/geo_output_state_hourly_tweet_war.json', 'w') as file:
-        json.dump(output, file)
-
-    return jsonify(output)
+    with open('Data/geoJSON_data/state.json', 'w') as file:
+        json.dump(sudo_state_geo, file)
+    with open('Data/geoJSON_data/state.json', 'r') as f:
+        geo = json.load(f)
+    return jsonify(geo)
 
 # general: tweet_lang_hourRange
 @app.route('/general/tweet_lang_hourRange')

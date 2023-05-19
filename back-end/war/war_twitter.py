@@ -16,20 +16,75 @@ with open('Data/geoJSON_data/postcode.json', 'r') as f1:
 with open('Data/geoJSON_data/suburb.json', 'r') as f2:
         sudo_suburb_geo = json.load(f2)    
 
+# state sentiment
+@app.route('/war/twitter/state_sentiment')
+def get_points():
+    results = db.view('_design/sentiment/_view/sentiment_state', group=True)
 
-with open('geoJSON files/states/STE_2021_AUST_GDA2020_Simplified.json', 'r') as file:
-        state_geo = json.load(file)
-with open('geoJSON files/gcc/GCCSA_2021_AUST_GDA2020.json', 'r') as file2:
-        gcc_geo = json.load(file2)
-with open('geoJSON files/postcode/POA_2021_AUST_GDA2020_Medium.json', 'r') as file3:
-        postcode_geo = json.load(file3)
-with open('geoJSON files/suburbs/SAL_2021_AUST_GDA94_Small.json', 'r') as file4:
-        suburb_geo = json.load(file4)
+    data = []
+    all_state = []
+    for row in results:
+        if row.key[0] == None:
+            continue
+        if row.key[0] not in all_state:
+            all_state.append(row.key[0])
+        data.append(row)
+
+    data1 = {}
+    for i in all_state:
+        neg = 0
+        pos = 0
+        neu = 0
+        total = 0
+        mag = 0
+        for j in data:
+            if j.key[0] == i:
+                total += j.value["count"]
+                mag += j.value["average_magnitude"]
+                if j.key[1] == "positive":
+                    pos += j.value["count"]
+                if j.key[1] == "negative":
+                    neg += j.value["count"]
+                if j.key[1] == "neutral":
+                    neu += j.value["count"]
+
+        new_item = {
+            "war_total": total,
+            "war_ave_mag": mag/3,
+            "war_neg%": neg/total,
+            "war_pos%": pos/total,
+            "war_neu%": neu/total
+        }
+        data1[i] = new_item
+
+    new_item1 = {
+            "war_total": None,
+            "war_ave_mag": None,
+            "war_neg%": None,
+            "war_pos%": None,
+            "war_neu%": None
+        }
+    
+    for feature in sudo_state_geo['features']:
+        if feature["properties"]["STE_NAME21"].lower() not in all_state:
+            for j in new_item1:
+                feature["properties"][j] = new_item1[j]
+        for row in data1:
+            if feature["properties"]["STE_NAME21"].lower() == row:
+                
+                for i in data1[row]:
+                    feature["properties"][i] = data1[row][i]
 
 
-#  monthly_state_sentiment
+    with open('back-end/geojson output/war_state.json', 'w') as file:
+        json.dump(sudo_state_geo, file)
+    with open('back-end/geojson output/war_state.json', 'r') as f:
+        geo = json.load(f)
+    return jsonify(geo)
+
+# monthly_state_sentiment
 @app.route('/war/twitter/monthly_state_sentiment')
-def get_data5():
+def get_points5():
     results = db.view('_design/sentiment/_view/war_monthly_state_proportion', group=True)
 
     data = []
@@ -95,116 +150,7 @@ def get_data5():
             data1[month] = new_item
 
         data2[i] = data1
-
-    with open('back-end/json output/json_output_monthly_state_sentiment_war.json', 'w') as f:
-        json.dump(data1, f)
-
-    new_item1 = {
-            "neg_sen": None,
-            "pos_sen": None,
-            "neu_sen": None,
-            "total": None,
-            "ave_sen": None,
-            "ave_mag": None,
-            "neg%": None,
-            "pos%": None,
-            "neu%": None
-        }
-    
-    for feature in sudo_state_geo['features']:
-        if feature["properties"]["STE_NAME21"].lower() not in all_state:
-            for j in new_item1:
-                feature["properties"][j] = new_item1[j]
-        for row in data2:
-            if feature["properties"]["STE_NAME21"].lower() == row:
-                for i in data2[row]:
-                    feature["properties"][i] = data2[row][i]
-
-    with open('back-end/geojson output/geo_output_monthly_state_sentiment_war.json', 'w') as file:
-        json.dump(sudo_state_geo, file)
-    with open('back-end/geojson output/geo_output_monthly_state_sentiment_war.json', 'r') as f:
-        geo = json.load(f)
-    return jsonify(geo)
-
-# state sentiment
-@app.route('/war/twitter/state_sentiment')
-def get_points():
-    results = db.view('_design/sentiment/_view/sentiment_state', group=True)
-
-    data = []
-    all_state = []
-    for row in results:
-        if row.key[0] == None:
-            continue
-        if row.key[0] not in all_state:
-            all_state.append(row.key[0])
-        data.append(row)
-
-    data1 = {}
-    for i in all_state:
-        neg = 0
-        pos = 0
-        neu = 0
-        total = 0
-        mag = 0
-        sen = 0
-        for j in data:
-            if j.key[0] == i:
-                total += j.value["count"]
-                mag += j.value["average_magnitude"]
-                sen += j.value["sentiment"]
-                if j.key[1] == "positive":
-                    pos += j.value["count"]
-                if j.key[1] == "negative":
-                    neg += j.value["count"]
-                if j.key[1] == "neutral":
-                    neu += j.value["count"]
-
-        new_item = {
-            "neg_sen": neg,
-            "pos_sen": pos,
-            "neu_sen": neu,
-            "total": total,
-            "ave_sen": sen/3,
-            "ave_mag": mag/3,
-            "neg%": neg/total,
-            "pos%": pos/total,
-            "neu%": neu/total
-        }
-        data1[i] = new_item
-
-    with open('back-end/json output/json_output_state_sentiment_war.json', 'w') as f:
-        json.dump(data1, f)
-
-    new_item1 = {
-            "neg_sen": None,
-            "pos_sen": None,
-            "neu_sen": None,
-            "total": None,
-            "ave_sen": None,
-            "ave_mag": None,
-            "neg%": None,
-            "pos%": None,
-            "neu%": None
-        }
-    
-    for feature in sudo_state_geo['features']:
-        if feature["properties"]["STE_NAME21"].lower() not in all_state:
-            for j in new_item1:
-                feature["properties"][j] = new_item1[j]
-        for row in data1:
-            if feature["properties"]["STE_NAME21"].lower() == row:
-                
-                for i in data1[row]:
-                    feature["properties"][i] = data1[row][i]
-
-
-    with open('back-end/geojson output/geo_output_state_sentiment_war.json', 'w') as file:
-        json.dump(sudo_state_geo, file)
-    with open('back-end/geojson output/geo_output_state_sentiment_war.json', 'r') as f:
-        geo = json.load(f)
-    return jsonify(geo)
-
+    return data2
 # postcode sentiment
 @app.route('/war/twitter/postcode_sentiment')
 def get_points2():
@@ -239,19 +185,13 @@ def get_points2():
             if ii.key == i:
                 ave_sen = ii.value["sentiment"]
         new_item = {
-            "neg_sen": neg,
-            "neu_sen": neu,
-            "pos_sen": pos,
-            "neg%": neg/total,
-            "neu%": neu/total,
-            "pos%": pos/total,
-            "ave_sen": ave_sen,
-            "total": total,
+            "war_neg%": neg/total,
+            "war_neu%": neu/total,
+            "war_pos%": pos/total,
+            "war_ave_sen": ave_sen,
+            "war_total": total,
         }
         data1[i] = new_item
-
-    with open('back-end/json output/json_output_postcode_sentiment.json', 'w') as f:
-        json.dump(data1, f)
 
     new_item1 = {
             "neg_sen": None,
@@ -273,9 +213,9 @@ def get_points2():
                 for i in data1[row]:
                     feature["properties"][i] = data1[row][i]
 
-    with open('back-end/geojson output/geo_output_postcode_sentiment.json', 'w') as file:
+    with open('back-end/geojson output/war_postcode.json', 'w') as file:
         json.dump(sudo_postcode_geo, file)
-    with open('back-end/geojson output/geo_output_postcode_sentiment.json', 'r') as f:
+    with open('back-end/geojson output/war_postcode.json', 'r') as f:
         geo = json.load(f)
     return jsonify(geo)
 
@@ -299,13 +239,11 @@ def get_points3():
         pos = 0
         neu = 0
         total = 0
-        sen = 0
         mag = 0
         for j in data:
             if j.key["suburb"].lower() == i:
                 total += j.value["count"]
                 mag += j.value["average_magnitude"]
-                sen += j.value["sentiment"]
                 if j.key["sentiment_category"] == "positive":
                     pos += j.value["count"]
                 if j.key["sentiment_category"] == "negative":
@@ -314,32 +252,20 @@ def get_points3():
                     neu += j.value["count"]
 
         new_item = {
-            "neg_sen": neg,
-            "pos_sen": pos,
-            "neu_sen": neu,
-            "total": total,
-            "ave_sen": sen/3,
-            "ave_mag": mag/3,
-            "neg%": neg/total,
-            "pos%": pos/total,
-            "neu%": neu/total
+            "war_total": total,
+            "war_ave_mag": mag/3,
+            "war_neg%": neg/total,
+            "war_pos%": pos/total,
+            "war_neu%": neu/total
         }
         data1[i] = new_item
 
-
-    with open('back-end/json output/json_output_suburb_sentiment.json', 'w') as f:
-        json.dump(data1, f)
-
     new_item1 = {
-            "neg_sen": None,
-            "pos_sen": None,
-            "neu_sen": None,
-            "total": None,
-            "ave_sen": None,
-            "ave_mag": None,
-            "neg%": None,
-            "pos%": None,
-            "neu%": None
+            "war_total": None,
+            "war_ave_mag": None,
+            "war_neg%": None,
+            "war_pos%": None,
+            "war_neu%": None
         }
     for feature in sudo_suburb_geo['features']:
         if feature["properties"]["SAL_NAME21"].lower() not in all_suburb:
@@ -352,9 +278,9 @@ def get_points3():
                     feature["properties"][i] = data1[row][i]
 
 
-    with open('back-end/geojson output/geo_output_suburb_sentiment.json', 'w') as file:
+    with open('back-end/geojson output/war_suburb.json', 'w') as file:
         json.dump(sudo_suburb_geo, file)
-    with open('back-end/geojson output/geo_output_suburb_sentiment.json', 'r') as f:
+    with open('back-end/geojson output/war_suburb.json', 'r') as f:
         geo = json.load(f)
     return jsonify(geo)
 
