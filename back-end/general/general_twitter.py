@@ -1,10 +1,11 @@
 import json
 from flask import Flask, jsonify
 import couchdb
-from flask_cors import CORS
+from flask import Blueprint
+
+general_twitter_bp = Blueprint('general_twitter', __name__)
 
 app = Flask(__name__)
-cors = CORS(app)
 
 couch = couchdb.Server('http://admin:1dTY1!PWM2@172.26.133.51:5984/')
 db = couch['huge-twitter-v2']
@@ -17,8 +18,8 @@ with open('Data/geoJSON_data/suburb.json', 'r') as f2:
         sudo_suburb_geo = json.load(f2)   
 
 
-# general: language hour
-@app.route('/general/twitter/language_hour')
+# language hour
+@general_twitter_bp.route('/general/twitter/language_hour')
 def get_data():
     results = db.view('_design/general/_view/language_hour', group=True)
 
@@ -43,8 +44,8 @@ def get_data():
         data1[i] = new
     return jsonify(data1)
 
-# general: state_hourly_tweet
-@app.route('/general/twitter/state_hourly_tweet')
+# state_hourly_tweet
+@general_twitter_bp.route('/general/twitter/state_hourly_tweet')
 def get_data2():
     results = db.view('_design/general/_view/state_hourly_tweet', group=True)
 
@@ -89,8 +90,8 @@ def get_data2():
         geo = json.load(f)
     return jsonify(geo)
 
-# general: tweet_lang_hourRange
-@app.route('/general/tweet_lang_hourRange')
+# tweet_lang_hourRange
+@general_twitter_bp.route('/general/tweet_lang_hourRange')
 def get_data3():
     results = db.view('_design/general/_view/tweet_postcode', group=True)
 
@@ -112,6 +113,3 @@ def get_data3():
         data1[i] = new
 
     return jsonify(data1)
-
-if __name__ == '__main__':
-    app.run(debug=True) 

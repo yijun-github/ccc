@@ -1,10 +1,11 @@
 import json
 from flask import Flask, jsonify
 import couchdb
-from flask_cors import CORS
+from flask import Blueprint
+
+war_twitter_bp = Blueprint('war_twitter', __name__)
 
 app = Flask(__name__)
-cors = CORS(app)
 
 couch = couchdb.Server('http://admin:1dTY1!PWM2@172.26.133.51:5984/')
 db = couch['huge-twitter-v2']
@@ -17,7 +18,7 @@ with open('Data/geoJSON_data/suburb.json', 'r') as f2:
         sudo_suburb_geo = json.load(f2)    
 
 # state sentiment
-@app.route('/war/twitter/state_sentiment')
+@war_twitter_bp.route('/war/twitter/state_sentiment')
 def get_points():
     results = db.view('_design/sentiment/_view/sentiment_state', group=True)
 
@@ -83,7 +84,7 @@ def get_points():
     return jsonify(geo)
 
 # monthly_state_sentiment
-@app.route('/war/twitter/monthly_state_sentiment')
+@war_twitter_bp.route('/war/twitter/monthly_state_sentiment')
 def get_points5():
     results = db.view('_design/sentiment/_view/war_monthly_state_proportion', group=True)
 
@@ -152,7 +153,7 @@ def get_points5():
         data2[i] = data1
     return data2
 # postcode sentiment
-@app.route('/war/twitter/postcode_sentiment')
+@war_twitter_bp.route('/war/twitter/postcode_sentiment')
 def get_points2():
     results = db.view('_design/sentiment/_view/war_postcode', group=True)
     results1 = db.view('_design/sentiment/_view/ave_sent_postcode', group=True)
@@ -220,7 +221,7 @@ def get_points2():
     return jsonify(geo)
 
 # suburb sentiment
-@app.route('/war/twitter/suburb_sentiment')
+@war_twitter_bp.route('/war/twitter/suburb_sentiment')
 def get_points3():
     results = db.view('_design/sentiment/_view/suburb_sentiment', group=True)
 
@@ -285,7 +286,7 @@ def get_points3():
     return jsonify(geo)
 
 # sentiment_language
-@app.route('/war/twitter/sentiment_language')
+@war_twitter_bp.route('/war/twitter/sentiment_language')
 def get_points4():
     results = db.view('_design/sentiment/_view/sentiment_language', group=True)
     
@@ -332,6 +333,3 @@ def get_points4():
         }
         data1[i] = new_item
     return jsonify(data1)
-
-if __name__ == '__main__':
-    app.run(debug=True) 

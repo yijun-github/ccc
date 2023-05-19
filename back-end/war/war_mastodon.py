@@ -1,15 +1,15 @@
 from flask import Flask, jsonify
 import couchdb
-from flask_cors import CORS
+from flask import Blueprint
 
-app = Flask(__name__)
-cors = CORS(app)
+war_mastodon_bp = Blueprint('war_mastodon', __name__)
+
 # connecting CouchDB
 couch = couchdb.Server('http://admin:1dTY1!PWM2@172.26.133.51:5984/')
 db = couch['mastodon_data_v3']
 
 # proportion_sentiment
-@app.route('/war/mastondon/proportion_sentiment')
+@war_mastodon_bp.route('/war/mastondon/proportion_sentiment')
 def get_data():
     results = db.view('_design/war_sentiment/_view/proportion_sentiment', group=True)
     data = {}
@@ -18,7 +18,7 @@ def get_data():
     return jsonify(data)
 
 # sentiment_lang
-@app.route('/war/mastondon/sentiment_lang')
+@war_mastodon_bp.route('/war/mastondon/sentiment_lang')
 def get_data2():
     results = db.view('_design/war_sentiment/_view/proportion_sentiment_lang', group=True)
     results2 = db.view('_design/war_sentiment/_view/magnitude_sentiment_lang', group=True)
@@ -48,9 +48,6 @@ def get_data2():
                 if j.key[1] == "Neutral":
                     neu += j.value
         new_item = {
-            "neg_sen": neg,
-            "pos_sen": pos,
-            "neu_sen": neu,
             "total": total,
             "neg%": neg/total,
             "pos%": pos/total,
@@ -61,10 +58,6 @@ def get_data2():
     for j in data1:
         for row in results2:
             if j == row.key["language"]:
-                data1[j]["ave_sen"] = row.value["sentiment"]
-                data1[j]["ave_mag"] = row.value["average_magnitude"]
-        
-    return jsonify(data1)
+                data1[j]["ave_mag"] = row.value["average_magnitude"]  
+    return data1
 
-if __name__ == '__main__':
-    app.run(debug=True) 

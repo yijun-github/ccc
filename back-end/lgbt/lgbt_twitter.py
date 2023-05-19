@@ -1,10 +1,11 @@
 import json
 from flask import Flask, jsonify
 import couchdb
-from flask_cors import CORS
+from flask import Blueprint
+
+lgbt_twitter_bp = Blueprint('lgbt_twitter', __name__)
 
 app = Flask(__name__)
-cors = CORS(app)
 
 couch = couchdb.Server('http://admin:1dTY1!PWM2@172.26.133.51:5984/')
 db = couch['huge-twitter-v2']
@@ -17,7 +18,7 @@ with open('Data/geoJSON_data/suburb.json', 'r') as f2:
         sudo_suburb_geo = json.load(f2)    
 
 # state sentiment
-@app.route('/lgbt/twitter/state_sentiment')
+@lgbt_twitter_bp.route('/lgbt/twitter/state_sentiment')
 def get_points():
     results = db.view('_design/lgbt/_view/sentiment_state_monthly', group=True)
 
@@ -93,7 +94,7 @@ def get_points():
      
 
 #  monthly_state_sentiment
-@app.route('/lgbt/twitter/monthly_state_sentiment')
+@lgbt_twitter_bp.route('/lgbt/twitter/monthly_state_sentiment')
 def get_points2():
     results = db.view('_design/lgbt/_view/sentiment_state_monthly', group=True)
 
@@ -147,7 +148,7 @@ def get_points2():
 
 
 # suburb_sentiment
-@app.route('/lgbt/twitter/suburb_sentiment')
+@lgbt_twitter_bp.route('/lgbt/twitter/suburb_sentiment')
 def get_points3():
     results = db.view('_design/lgbt/_view/suburb_sentiment', group=True)
 
@@ -211,7 +212,7 @@ def get_points3():
     return jsonify(geo)
 
 # sentiment_language
-@app.route('/lgbt/twitter/sentiment_language')
+@lgbt_twitter_bp.route('/lgbt/twitter/sentiment_language')
 def get_points4():
     results = db.view('_design/lgbt/_view/sentiment_language', group=True)
     
@@ -255,6 +256,3 @@ def get_points4():
         }
         data1[i] = new_item
     return jsonify(data1)
-
-if __name__ == '__main__':
-    app.run(debug=True) 
