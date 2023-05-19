@@ -7,7 +7,6 @@ from lgbt.lgbt_twitter import lgbt_twitter_bp
 from general.general_mastodon import general_mastodon_bp
 from general.general_twitter import general_twitter_bp
 from geojson import geojson_bp
-from flask_cors import CORS
 
 app = Flask(__name__)
 cors = CORS(app)
