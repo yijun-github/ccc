@@ -7,6 +7,8 @@ import MapTileLayers from "../MapTileLayers";
 import SuburbWarLayer from "./map layers/SuburbWarLayer";
 import StateWarLayer from "./map layers/StateWarLayer";
 import SuburbElectionLayer from "../politicsMapLayers/SuburbElectionLayer";
+import IncomeLayer from "../SuburbMapLayers/IncomeLayer";
+import EducLayer from "../SuburbMapLayers/EducLayer";
 
 export default function Scenario1Map({ stateData, suburbData }) {
     const mapStyle = {
@@ -20,7 +22,7 @@ export default function Scenario1Map({ stateData, suburbData }) {
             <div className="">
                 <div className="">
                 <MapContainer center={[-26.90, 133.76]}
-                zoom={4.25} scrollWheelZoom={true} style={mapStyle}>
+                zoom={5} scrollWheelZoom={true} style={mapStyle}>
                     <MapTileLayers />
                     <LayersControl>
                     { stateData &&
@@ -33,6 +35,8 @@ export default function Scenario1Map({ stateData, suburbData }) {
                     <>
                         <SuburbWarLayer data={suburbData} />
                         <SuburbElectionLayer data={suburbData} />
+                        <IncomeLayer data={suburbData} />
+                        <EducLayer data={suburbData} />
                     </>
                     }
                     </LayersControl>

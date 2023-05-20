@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Scenario1Map from "./war/Scenario1Map";
-import StackedBarLangSent from "./StackedBarLangSent";
-import BarAveLangSent from "./BarAveLangSent";
-import BarLang from "./BarLang";
-import PieLangPos from "./PieLangPos";
 
 import { 
   Typography, Card, 
@@ -12,31 +8,43 @@ import {
 import PageTitle from "./PageTitle";
 import PieTotalSent from "./PieTotalSent";
 import { getData, getLangSentData, getRUwarData } from "../functions/fetchData";
-import PieTotalWarSent from "./war/PieTotalWarSent";
+import PieTotalWarSent from "./war/PieTotalSent";
 import LinesStateMonth from "./war/LinesStateMonth";
+import BarTvMLangSent from "./war/BarTvMLangSent";
+import BarTwitterLangSent from "./war/BarTwitLangSent";
+import BarMastLangSent from "./war/BarMastLangSent";
+import LinesStateMonthMag from "./war/LinesStateMonthMag";
+import ScatterExample from "./war/ScatterExample";
 
 
 function Scenario1({ stateData=null, suburbData=null, landSent=null }) {
 
   const [stateMonthly, setStateMonthly] = useState(null)
   const [ruWar, setRUwar] = useState(null)
+  const [twitterLangSent, setTwitterLangSent] = useState(null)
   const [mastLangSent, setMastLangSent] = useState(null)
+  const [mastProp, setMastProp] = useState(null)
+  const [twitterProp, setTwitterProp] = useState(null)
 
   useEffect(() => {
       getData('http://127.0.0.1:5000/war/twitter/monthly_state_sentiment', setStateMonthly)
-      getData('http://127.0.0.1:5000/war/mastondon/sentiment_lang', setMastLangSent)
+      getData('http://127.0.0.1:5000/war/mastondon/proportion_sentiment', setMastProp)
+      getData('http://127.0.0.1:5000/war/twitter/total_sentiment', setTwitterProp)
+      getLangSentData('http://127.0.0.1:5000/war/twitter/sentiment_language', setTwitterLangSent)
+      getLangSentData('http://127.0.0.1:5000/war/mastondon/sentiment_lang', setMastLangSent)
   }, [])
 
   return (
     <>
     <PageTitle title="Ukraine Russia War" />
-    <Container maxWidth="lg" style={{ marginTop: '0' }}>
+    <Container xs={12} md={12} lg={12} style={{ marginTop: '0' }}>
       <Scenario1Map stateData={stateData} suburbData={suburbData} />
     </Container>
     <Container style={{ marginTop: '2em', display: 'flex' }}>
       <Grid container spacing={2} justifyContent="center">
         {
           stateMonthly &&
+          <>
           <Grid item xs={12} md={12} lg={8}>
             <Card justifyContent="center">
               <CardContent>
@@ -44,44 +52,75 @@ function Scenario1({ stateData=null, suburbData=null, landSent=null }) {
               </CardContent>
             </Card>
           </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <Typography>Analysis</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <Typography>Analysis</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={12} lg={8}>
+            <Card justifyContent="center">
+              <CardContent>
+                <LinesStateMonthMag data={stateMonthly} />
+              </CardContent>
+            </Card>
+          </Grid>
+          </>
         }
-        <Grid item xs={12} md={6} lg={4}>
-          <Card justifyContent="center">
-            <CardContent>
-              <StackedBarLangSent />
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card justifyContent="center">
-            <CardContent>
-              <BarAveLangSent />
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card justifyContent="center">
-            <CardContent>
-              <BarLang />
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card justifyContent="center">
-            <CardContent>
-              <PieLangPos />
-            </CardContent>
-          </Card>
-        </Grid>
         {
-        ruWar &&
-        <Grid item xs={12} md={6} lg={4}>
-          <Card justifyContent="center">
-            <CardContent>
-              <PieTotalWarSent data={ruWar}/>
-            </CardContent>
-          </Card>
-        </Grid>
+          twitterLangSent && (mastLangSent &&
+          <>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <BarTwitterLangSent data={twitterLangSent} />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <BarMastLangSent data={mastLangSent} />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <Typography>Analysis</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          </>
+          )
+        }
+        {
+        mastProp && (twitterProp &&
+          <>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <Typography>Analysis</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={12} lg={8}>
+            <Card justifyContent="center">
+              <CardContent>
+                <PieTotalWarSent mastProp={mastProp} twitterProp={twitterProp} />
+              </CardContent>
+            </Card>
+          </Grid>
+          </>
+          )
         }
       </Grid>
     </Container>

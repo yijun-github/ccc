@@ -16,7 +16,7 @@ export default function Scenario2Map({ postData }) {
             <div className="">
                 <div className="">
                 <MapContainer center={[-26.90, 133.76]}
-                zoom={4.25} scrollWheelZoom={true} style={mapStyle}>
+                zoom={5} scrollWheelZoom={true} style={mapStyle}>
                     <MapTileLayers />
                     { postData &&
                     <LayersControl>

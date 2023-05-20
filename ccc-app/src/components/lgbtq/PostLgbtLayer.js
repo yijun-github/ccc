@@ -39,7 +39,7 @@ export default function PostLgbtLayer(props) {
             <p><i>Negative %: ${round(feature.properties["Negative Proportion"]*100, 2)}</i></p>
             <p><i>Total: ${feature.properties["Total"]}</i></p>
             </div>`
-        if (feature.properties && (feature.properties["Positive Proportion"] !== undefined)) {
+        if (feature.properties && (feature.properties["Positive Proportion"] != null)) {
             layer.bindPopup(popUpText);
         }
     }

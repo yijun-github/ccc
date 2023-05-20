@@ -3,7 +3,7 @@ import { CartesianGrid, Legend, Line, LineChart, ReferenceLine, Tooltip, XAxis, 
 import ChartTitle from "../ChartTitle";
 
 
-export default function LinesStateMonth({ data }) {
+export default function LinesStateMonthMag({ data }) {
 
     var monthData = []
 
@@ -14,7 +14,7 @@ export default function LinesStateMonth({ data }) {
     Object.keys(data).forEach(state => {
         Object.keys(data[state]).forEach(month => {
             if (monthData[month] == undefined) {monthData[month] = {}}
-            monthData[month][state] = round((data[state][month]['pos%'] - data[state][month]['neg%'])*100, 3)
+            monthData[month][state] = round((data[state][month]['ave_mag']), 3)
         })
     })
 
@@ -29,7 +29,7 @@ export default function LinesStateMonth({ data }) {
 
     return(
       <>
-        <ChartTitle title="Difference in positive-negative sentiment percentage" />
+        <ChartTitle title="Magnitude of sentiment" />
         <LineChart width={700} height={300} data={monthData}
             margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />

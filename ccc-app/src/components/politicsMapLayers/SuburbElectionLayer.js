@@ -1,6 +1,7 @@
 import React from "react";
 import { GeoJSON, LayersControl } from "react-leaflet";
 import { geoJSON } from "leaflet";
+import { round } from "../../functions/round";
 
 export default function StateElectionLayer(props) {
 
@@ -42,16 +43,14 @@ export default function StateElectionLayer(props) {
         };
     }
 
-    function round(x, nDecimal) {
-        return (Math.round((x + Number.EPSILON) * (10**nDecimal)) / (10**nDecimal))
-    }
-
     function popup(feature, layer) {
         var popUpText = `<div style={text-align: center, margin: 5px}>
             <b>State/Territory: ${feature.properties.SAL_NAME21}</b>
             <p><i>Liberal National %: ${round(feature.properties["liberal_national%"]*100, 2)}</i></p>
             <p><i>Labor %: ${round(feature.properties["labor%"]*100, 2)}</i></p>
             <p><i>Total Votes: ${feature.properties["total_formal_votes"]}</i></p>
+            <p><i>Median Income ($): ${round(feature.properties["median_income"], 0)}</i></p>
+            <p><i>Degree %: ${round(feature.properties["uni"]*100, 2)}</i></p>
             </div>`
         if (feature.properties && (feature.properties["total_formal_votes"] != null)) {
             layer.bindPopup(popUpText);

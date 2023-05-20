@@ -3,18 +3,18 @@ import { GeoJSON, LayersControl } from "react-leaflet";
 import { geoJSON } from "leaflet";
 import { round } from "../../functions/round";
 
-export default function StateElectionLayer(props) {
+export default function EducLayer(props) {
 
     const checked = (props.checked ? true : false)
 
-    const stateData = props.data
+    const suburbData = props.data
 
     function getColor(x) {
-        const colors = ['#a50026','#d73027','#f46d43','#fdae61','#fee090','#ffffbf',
-                        '#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'] //Diverging-Red-Blu
+        const colors = ['#440154','#482475','#414487','#355f8d','#2a788e','#21918c',
+                        '#22a884','#44bf70','#7ad151','#bddf26','#fde725'] //Diverging-Red-Blu
 
-        const range = 0.1
-        const mid = 0.5
+        const range = 0.6
+        const mid = 0.25
         const val = (x-mid)/range + 0.5
 
         const colorIndex = Math.max(0,
@@ -27,17 +27,17 @@ export default function StateElectionLayer(props) {
 
     function getStyle(feature) {
         
-        const fillColor = (feature.properties.total_formal_votes >= 1) ? 
-            getColor(feature.properties["liberal_national%"]) :
+        const fillColor = (feature.properties["uni"] != null) ? 
+            getColor(feature.properties["uni"]) :
             "#000"
         
-        const fillOpacity = (feature.properties.total_formal_votes >= 1) ? 0.7 : 0
+        const fillOpacity = (feature.properties["uni"] != null) ? 0.7 : 0
 
         return {
             fillColor: fillColor,
-            weight: 1,
-            opacity: 1,
-            color: "white",
+            weight: 0.3,
+            opacity: 0.2,
+            color: "black",
             dashArray: '3',
             fillOpacity: fillOpacity
         };
@@ -45,12 +45,11 @@ export default function StateElectionLayer(props) {
 
     function popup(feature, layer) {
         var popUpText = `<div style={text-align: center, margin: 5px}>
-            <b>State/Territory: ${feature.properties.STE_NAME21}</b>
-            <p><i>Liberal National %: ${round(feature.properties["liberal_national%"]*100, 2)}</i></p>
-            <p><i>Labor %: ${round(feature.properties["labor%"]*100, 2)}</i></p>
-            <p><i>Total Votes: ${feature.properties["total_formal_votes"]}</i></p>
+            <b>Suburb: ${feature.properties.SAL_NAME21}</b>
+            <p><i>Median Income ($): ${round(feature.properties["median_income"], 0)}</i></p>
+            <p><i>Degree %: ${round(feature.properties["uni"]*100, 2)}</i></p>
             </div>`
-        if (feature.properties && (feature.properties["liberal_national%"] != null)) {
+        if (feature.properties && (feature.properties["uni"] != null)) {
             layer.bindPopup(popUpText);
         }
     }
@@ -86,9 +85,9 @@ export default function StateElectionLayer(props) {
     const { BaseLayer } = LayersControl
 
     return(
-        <BaseLayer checked={checked} name="State Election (2 Party) Results">
-            {stateData && (
-                <GeoJSON data={stateData} key={"liberal_national%"} style={getStyle}
+        <BaseLayer checked={checked} name="Suburb % with a degree">
+            {suburbData && (
+                <GeoJSON data={suburbData} key={"uni"} style={getStyle}
                     onEachFeature={onEachFeature}
                 />
             )}

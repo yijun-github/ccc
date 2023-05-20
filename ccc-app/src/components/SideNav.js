@@ -15,7 +15,7 @@ const drawerWidth = 240;
 
 export default function SideNav() {
     const navInfo = [{'label': 'Home', 'link': '/'}, {'label': 'Ukraine-Russia War', 'link': '/Scenario1'},
-    {'label': 'LGBT', 'link': '/Scenario2'}, {'label': 'Time', 'link': '/Scenario3'}]
+    {'label': 'LGBTQ', 'link': '/Scenario2'}, {'label': 'Time', 'link': '/Scenario3'}]
 
     return (
     <>
