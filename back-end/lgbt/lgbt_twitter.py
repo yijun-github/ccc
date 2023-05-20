@@ -16,7 +16,17 @@ with open('../Data/geoJSON_data/state.json', 'r') as f:
 with open('../Data/geoJSON_data/postcode.json', 'r') as f1:
         sudo_postcode_geo = json.load(f1)    
 with open('../Data/geoJSON_data/suburb.json', 'r') as f2:
-        sudo_suburb_geo = json.load(f2)    
+        sudo_suburb_geo = json.load(f2)  
+
+# total sentiment
+@lgbt_twitter_bp.route('/lgbt/twitter/total_sentiment')
+def get_points6():
+    results = db.view('_design/lgbt/_view/overall_sentiment', group=True)
+    data = {}
+    for row in results:
+        data[row.key] = row.value
+
+    return jsonify(data)  
 
 # state sentiment
 @lgbt_twitter_bp.route('/lgbt/twitter/state_sentiment')

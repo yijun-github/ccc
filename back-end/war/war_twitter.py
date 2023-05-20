@@ -18,6 +18,16 @@ with open('../Data/geoJSON_data/postcode.json', 'r') as f1:
 with open('../Data/geoJSON_data/suburb.json', 'r') as f2:
         sudo_suburb_geo = json.load(f2)    
 
+# total sentiment
+@war_twitter_bp.route('/war/twitter/total_sentiment')
+def get_points6():
+    results = db.view('_design/sentiment/_view/RUwar', group=True)
+    data = {}
+    for row in results:
+        data[row.key] = row.value
+
+    return jsonify(data)
+
 # state sentiment
 @war_twitter_bp.route('/war/twitter/state_sentiment')
 def get_points():
