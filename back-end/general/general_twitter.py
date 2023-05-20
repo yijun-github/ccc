@@ -47,6 +47,29 @@ def get_data():
 
 # state_hourly_tweet
 @general_twitter_bp.route('/general/twitter/state_hourly_tweet')
+def get_data0():
+    results = db.view('_design/general/_view/state_hourly_tweet', group=True)
+
+    data = []
+    all_state = []
+    for row in results:
+        if row.key[0] == None:
+            continue
+        if row.key[0] not in all_state:
+            all_state.append(row.key[0])
+        data.append(row)
+
+    data1 = {}
+    for i in all_state:
+        new = {}
+        for j in data:
+            if j.key[0] ==i:
+                new[j.key[1]] = j.value
+        data1[i] = new
+    return jsonify(data1)
+
+# state_tweet_day_night
+@general_twitter_bp.route('/general/twitter/state_tweet_day_night')
 def get_data2():
     results = db.view('_design/general/_view/state_hourly_tweet', group=True)
 
@@ -90,7 +113,7 @@ def get_data2():
         geo = json.load(f)
     return jsonify(geo)
 
-# state_hourly_tweet
+# suburb_hourly_tweet
 @general_twitter_bp.route('/general/twitter/suburb_hourly_tweet')
 def get_data3():
     results = db.view('_design/general/_view/suburb_hourly_tweet', group=True)
@@ -135,11 +158,5 @@ def get_data3():
         json.dump(sudo_suburb_geo, file)
     with open('geojson output/general_suburb.json', 'r') as f:
         geo = json.load(f)
-
-    ww=0
-    for g in geo["features"]:
-        if g["properties"]["day"] is not None:
-            ww+=1
-    print(ww)
 
     return jsonify(geo)

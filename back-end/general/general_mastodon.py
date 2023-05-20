@@ -78,7 +78,7 @@ def get_data4():
             if j.key[0] == i:
                 if row.key[1] in [0, 1, 2, 3, 4, 5, 22, 23]:
                     new["night"] += row.value
-            else:
-                new["day"] += row.value
+                else:
+                    new["day"] += row.value
         data1[i] = new
     return jsonify(data1)

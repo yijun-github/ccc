@@ -9,6 +9,15 @@ app = Flask(__name__)
 couch = couchdb.Server('http://admin:1dTY1!PWM2@172.26.133.51:5984/')
 db = couch['mastodon_data_v3']
 
+# overall_sentiment
+@lgbt_mastodon_bp.route('/lgbt/mastondon/overall_sentiment')
+def get_data0():
+    results = db.view('_design/lgbt_sentiment/_view/lgbt_overall', group=True)
+    data = {}
+    for row in results:
+        data[row.key[0]] = row.value
+    return jsonify(data)
+
 # sentiment_lang
 @lgbt_mastodon_bp.route('/lgbt/mastondon/sentiment_lang')
 def get_data():
