@@ -142,9 +142,9 @@ def get_points2():
                 "pos%": pos/total,
                 "ave_mag": mag/3
             }
-            data1[month] = new_item
+            data1[month] = new_item.copy()
 
-        data2[i] = data1
+        data2[i] = data1.copy()
     return data2
 
 
