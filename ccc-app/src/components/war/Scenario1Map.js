@@ -7,8 +7,8 @@ import MapTileLayers from "../MapTileLayers";
 import SuburbWarLayer from "./map layers/SuburbWarLayer";
 import StateWarLayer from "./map layers/StateWarLayer";
 import SuburbElectionLayer from "../politicsMapLayers/SuburbElectionLayer";
-import IncomeLayer from "../SuburbMapLayers/IncomeLayer";
 import EducLayer from "../SuburbMapLayers/EducLayer";
+import IncomeLayer from "../SuburbMapLayers/IncomeLayer";
 
 export default function Scenario1Map({ stateData, suburbData }) {
     const mapStyle = {

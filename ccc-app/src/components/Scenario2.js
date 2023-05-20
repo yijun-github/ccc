@@ -7,11 +7,12 @@ import {
   Container } from "@mui/material";
 import PageTitle from "./PageTitle";
 import { getData, getLangSentData, getRUwarData } from "../functions/fetchData";
-import LinesStateMonth from "./war/LinesStateMonth";
-import LinesStateMonthMag from "./war/LinesStateMonthMag";
-import BarTwitterLangSent from "./war/BarTwitLangSent";
-import BarMastLangSent from "./war/BarMastLangSent";
-import PieTotalWarSent from "./war/PieTotalSent";
+import LinesStateMonth from "./common/LinesStateMonth";
+import LinesStateMonthMag from "./common/LinesStateMonthMag";
+import BarTwitterLangSent from "./common/BarTwitLangSent";
+import BarMastLangSent from "./common/BarMastLangSent";
+import PieTotalWarSent from "./common/PieTotalSent";
+import ScatterLgbtIncEduSent from "./lgbtq/ScatterLgbtIncEduSent";
 
 
 
@@ -118,6 +119,25 @@ function Scenario2({ stateData=null, suburbData=null, landSent=null }) {
           </Grid>
           </>
           )
+        }
+        {
+          suburbData != null &&
+          <>
+          <Grid item xs={12} md={12} lg={8}>
+            <Card justifyContent="center">
+              <CardContent>
+                <ScatterLgbtIncEduSent data={suburbData} />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <Typography>Analysis</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          </>
         }
       </Grid>
     </Container>

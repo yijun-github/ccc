@@ -4,7 +4,7 @@ import StackedBarLangSent from "./StackedBarLangSent";
 import BarAveLangSent from "./BarAveLangSent";
 import BarLang from "./BarLang";
 import PieLangPos from "./PieLangPos";
-import LinesByHour from "./general/LinesByHour";
+import LinesByHour from "./time/LinesByHour";
 
 import { 
   Typography, Card,
@@ -12,23 +12,24 @@ import {
   Container } from "@mui/material";
 import PageTitle from "./PageTitle";
 import { getData, getDayNightData } from "../functions/fetchData";
-import BarLangDayNight from "./general/BarLangDayNight";
-import BarLangDayNightSortLang from "./general/BarLangDayNightSortLang";
+import BarLangDayNight from "./time/BarLangDayNight";
+import BarLangDayNightSortLang from "./time/BarLangDayNightSortLang";
 import ChartTitle from "./ChartTitle";
 
 
 function Scenario3() {
 
-  const [stateHourly, setStateHourly] = useState(null)
-  const [langHourly, setLangHourly] = useState(null)
-  const [langDayNight, setLangDayNight] = useState(null)
-  const [mastHourSent, setMastHourSent] = useState(null)
+  const [mastHourly, setMastHourly] = useState(null)
+  const [mastDayNight, setMastDayNight] = useState(null)
+  const [mastLangHourly, setMastLangHourly] = useState(null)
+  const [mastLangDayNight, setMastLangDayNight] = useState(null)
+  const [twitterLangDayNight, setTwitterLangDayNight] = useState(null)
 
   useEffect(() => {
-    getData('http://127.0.0.1:5000/general/twitter/state_hourly_tweet', setStateHourly)
-    getData('http://127.0.0.1:5000/general/twitter/language_hour', setLangHourly)
-    getDayNightData('http://127.0.0.1:5000/general/tweet_lang_hourRange', setLangDayNight)
-    getData('http://127.0.0.1:5000/general/mastondon/proportion_sentiment', setMastHourSent)
+    //getData('http://127.0.0.1:5000/general/mastondon/count_hourly', setMastHourly)
+    //getData('http://127.0.0.1:5000/general/mastondon/count_day_night', setMastDayNight)
+    //getData('http://127.0.0.1:5000/general/mastodon/language_hour', setMastLangHourly)
+    //getData('http://127.0.0.1:5000/general/mastodon/language_day_night', setMastLangDayNight)
   }, [])
 
   return (
@@ -56,12 +57,12 @@ function Scenario3() {
           </Card>
         </Grid>
         {
-          langDayNight &&
+          mastLangDayNight &&
           <>
           <Grid item xs={12} md={6} lg={4}>
             <Card justifyContent="center">
               <CardContent>
-                <BarLangDayNight data={langDayNight}/>
+                <BarLangDayNight data={mastLangDayNight}/>
               </CardContent>
             </Card>
           </Grid>
@@ -69,7 +70,27 @@ function Scenario3() {
             <Card justifyContent="center">
               <CardContent>
                 <ChartTitle title="Day/Night Tweets (sort Language)" />
-                <BarLangDayNightSortLang data={langDayNight}/>
+                <BarLangDayNightSortLang data={mastLangDayNight}/>
+              </CardContent>
+            </Card>
+          </Grid>
+          </>
+        }
+        {
+          twitterLangDayNight &&
+          <>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <BarLangDayNight data={twitterLangDayNight}/>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <ChartTitle title="Day/Night Tweets (sort Language)" />
+                <BarLangDayNightSortLang data={twitterLangDayNight}/>
               </CardContent>
             </Card>
           </Grid>

@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, LayersControl } from "react-leaflet";
-import PostLgbtLayer from "./PostLgbtLayer";
+
+
+import StateElectionLayer from "../politicsMapLayers/StateElectionLayer";
 import MapTileLayers from "../MapTileLayers";
+import SuburbLgbtLayer from "./map layers/SuburbLgbtLayer";
+import StateLgbtLayer from "./map layers/StateLgbtLayer";
+import SuburbElectionLayer from "../politicsMapLayers/SuburbElectionLayer";
+import IncomeLayer from "../SuburbMapLayers/IncomeLayer";
+import EducLayer from "../SuburbMapLayers/EducLayer";
 
-
-export default function Scenario2Map({ postData }) {
+export default function Scenario2Map({ stateData, suburbData }) {
     const mapStyle = {
         height: '100vh',
         width: '100%',
@@ -18,11 +24,22 @@ export default function Scenario2Map({ postData }) {
                 <MapContainer center={[-26.90, 133.76]}
                 zoom={5} scrollWheelZoom={true} style={mapStyle}>
                     <MapTileLayers />
-                    { postData &&
                     <LayersControl>
-                        <PostLgbtLayer data={postData} checked={true} />
-                    </LayersControl>
+                    { stateData &&
+                    <>
+                        <StateLgbtLayer data={stateData} checked={true} />
+                        <StateElectionLayer data={stateData} />
+                    </>
                     }
+                    { suburbData &&
+                    <>
+                        <SuburbLgbtLayer data={suburbData} />
+                        <SuburbElectionLayer data={suburbData} />
+                        <IncomeLayer data={suburbData} />
+                        <EducLayer data={suburbData} />
+                    </>
+                    }
+                    </LayersControl>
                 </MapContainer>
                 </div>
             </div>

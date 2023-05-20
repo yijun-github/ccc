@@ -8,13 +8,12 @@ import {
 import PageTitle from "./PageTitle";
 import PieTotalSent from "./PieTotalSent";
 import { getData, getLangSentData, getRUwarData } from "../functions/fetchData";
-import PieTotalWarSent from "./war/PieTotalSent";
-import LinesStateMonth from "./war/LinesStateMonth";
-import BarTvMLangSent from "./war/BarTvMLangSent";
-import BarTwitterLangSent from "./war/BarTwitLangSent";
-import BarMastLangSent from "./war/BarMastLangSent";
-import LinesStateMonthMag from "./war/LinesStateMonthMag";
-import ScatterExample from "./war/ScatterExample";
+import PieTotalWarSent from "./common/PieTotalSent";
+import LinesStateMonth from "./common/LinesStateMonth";
+import BarTwitterLangSent from "./common/BarTwitLangSent";
+import BarMastLangSent from "./common/BarMastLangSent";
+import LinesStateMonthMag from "./common/LinesStateMonthMag";
+import ScatterWarIncEduSent from "./war/ScatterWarIncEduSent";
 
 
 function Scenario1({ stateData=null, suburbData=null, landSent=null }) {
@@ -121,6 +120,25 @@ function Scenario1({ stateData=null, suburbData=null, landSent=null }) {
           </Grid>
           </>
           )
+        }
+        {
+          suburbData != null &&
+          <>
+          <Grid item xs={12} md={12} lg={8}>
+            <Card justifyContent="center">
+              <CardContent>
+                <ScatterWarIncEduSent data={suburbData} />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <Typography>Analysis</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          </>
         }
       </Grid>
     </Container>
