@@ -18,6 +18,16 @@ with open('../Data/geoJSON_data/postcode.json', 'r') as f1:
 with open('../Data/geoJSON_data/suburb.json', 'r') as f2:
         sudo_suburb_geo = json.load(f2)   
 
+# total sentiment
+@general_twitter_bp.route('/general/twitter/total_sentiment')
+def get_points0():
+    results = db.view('_design/general/_view/general_sentiment', group=True)
+    data = {}
+    for row in results:
+        data[row.key] = row.value
+
+    return jsonify(data)
+
 
 # language hour
 @general_twitter_bp.route('/general/twitter/language_hour')
