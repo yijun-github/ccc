@@ -15,7 +15,7 @@ import blank_profile_image from "../img/blank-profile.png";
 
 import PS_photo from "../img/PS.jpg";
 import Aobo_photo from "../img/Aobo.jpg"
-
+import zhihao_photo from "../img/zhihao.jpg"
 
 export default function Home() {
     return (
@@ -69,7 +69,7 @@ export default function Home() {
                     <TeamMemberCard img={PS_photo} firstName="Pavith" lastName="Samarakoon" />
                 </Grid>
                 <Grid item xs={6} md={4} lg={2}>
-                    <TeamMemberCard img={blank_profile_image} firstName="Zhihao" lastName="Liang" />
+                    <TeamMemberCard img={zhihao_photo} firstName="Zhihao" lastName="Liang" />
                 </Grid>
                 <Grid item xs={6} md={4} lg={2}>
                     <TeamMemberCard img={blank_profile_image} firstName="Yijun" lastName="Liu" />
