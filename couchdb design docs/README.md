@@ -12,7 +12,9 @@ COMP90024 Project 2 2023
 
 To put design documents into CouchDB, follow the steps below:
 
+```shell
 curl -X PUT http://{username}:{password}@{localhost}/{database}/_design/{design_doc_name} -d @{filename}.json
+```
 
 
 Make sure to replace the placeholders with the appropriate values:
