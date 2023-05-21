@@ -10,12 +10,12 @@ app = Flask(__name__)
 
 couch = couchdb.Server('http://admin:1dTY1!PWM2@172.26.133.51:5984/')
 db = couch['huge-twitter-v2']
-
-with open('../Data/geoJSON_data/state.json', 'r') as f:
+project_prefix='/home/ubuntu/ccc'
+with open(f'{project_prefix}/Data/geoJSON_data/state.json', 'r') as f:
         sudo_state_geo = json.load(f)
-with open('../Data/geoJSON_data/postcode.json', 'r') as f1:
+with open(f'{project_prefix}/Data/geoJSON_data/postcode.json', 'r') as f1:
         sudo_postcode_geo = json.load(f1)    
-with open('../Data/geoJSON_data/suburb.json', 'r') as f2:
+with open(f'{project_prefix}/Data/geoJSON_data/suburb.json', 'r') as f2:
         sudo_suburb_geo = json.load(f2)    
 
 # total sentiment
@@ -87,9 +87,9 @@ def get_points():
                     feature["properties"][i] = data1[row][i]
 
 
-    with open('back-end/geojson output/war_state.json', 'w') as file:
+    with open(f'{project_prefix}/back-end/geojson_output/war_state.json', 'w') as file:
         json.dump(sudo_state_geo, file)
-    with open('back-end/geojson output/war_state.json', 'r') as f:
+    with open(f'{project_prefix}/back-end/geojson_output/war_state.json', 'r') as f:
         geo = json.load(f)
     return jsonify(geo)
 
@@ -225,9 +225,9 @@ def get_points2():
                 for i in data1[row]:
                     feature["properties"][i] = data1[row][i]
 
-    with open('geojson output/war_postcode.json', 'w') as file:
+    with open(f'{project_prefix}/back-end/geojson_output/war_postcode.json', 'w') as file:
         json.dump(sudo_postcode_geo, file)
-    with open('geojson output/war_postcode.json', 'r') as f:
+    with open(f'{project_prefix}/back-end/geojson_output/war_postcode.json', 'r') as f:
         geo = json.load(f)
     return jsonify(geo)
 
@@ -291,9 +291,9 @@ def get_points3():
                 for i in data1[row]:
                     feature["properties"][i] = data1[row][i]
 
-    with open('geojson output/war_suburb.json', 'w') as file:
+    with open(f'{project_prefix}/back-end/geojson_output/war_suburb.json', 'w') as file:
         json.dump(sudo_suburb_geo, file)
-    with open('geojson output/war_suburb.json', 'r') as f:
+    with open(f'{project_prefix}/back-end/geojson_output/war_suburb.json', 'r') as f:
         geo = json.load(f)
     """
     ww=0
