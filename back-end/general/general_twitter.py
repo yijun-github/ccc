@@ -29,8 +29,8 @@ def get_points0():
     return jsonify(data)
 
 
-# language hour
-@general_twitter_bp.route('/general/twitter/language_hour')
+# language day/night
+@general_twitter_bp.route('/general/twitter/language_day_night')
 def get_data():
     results = db.view('_design/general/_view/language_hour', group=True)
 

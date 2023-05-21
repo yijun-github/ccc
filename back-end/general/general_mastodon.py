@@ -10,8 +10,8 @@ app = Flask(__name__)
 couch = couchdb.Server('http://admin:1dTY1!PWM2@172.26.133.51:5984/')
 db = couch['mastodon_data_v3']
 
-# proportion of tweet every hour 
-@general_mastodon_bp.route('/general/mastondon/proportion_sentiment_hourly')
+# count of tweet every hour 
+@general_mastodon_bp.route('/general/mastondon/count_hourly')
 def get_data():
     results = db.view('_design/general/_view/hourly', group=True)
     data = {}
@@ -21,8 +21,8 @@ def get_data():
 
     return jsonify(data)
 
-# proportion of tweet at night/day
-@general_mastodon_bp.route('/general/mastondon/proportion_sentiment_day_night')
+# count of tweet at night/day
+@general_mastodon_bp.route('/general/mastondon/count_day_night')
 def get_data2():
     results = db.view('_design/general/_view/hourly', group=True)
     data = {"day": 0, "night": 0}
@@ -54,7 +54,7 @@ def get_data3():
         for j in data:
             if j.key[0] == i:
                 new[j.key[1]] = j.value
-        data1[i] = new
+        data1[i] = new.copy()
     return jsonify(data1)
 
 # language_day_night
@@ -76,9 +76,9 @@ def get_data4():
         new = {"day":0, "night":0}
         for j in data:
             if j.key[0] == i:
-                if row.key[1] in [0, 1, 2, 3, 4, 5, 22, 23]:
-                    new["night"] += row.value
+                if j.key[1] in [0, 1, 2, 3, 4, 5, 22, 23]:
+                    new["night"] += j.value
                 else:
-                    new["day"] += row.value
-        data1[i] = new
+                    new["day"] += j.value
+        data1[i] = new.copy()
     return jsonify(data1)
