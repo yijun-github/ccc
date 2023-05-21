@@ -1,3 +1,12 @@
+/*
+COMP90024 Project 2 2023
+Contributer
+Aobo Li              1172339
+Pavith Samarakoon    1297058
+Zhihao Liang         1367102
+Jiqiang Chen         1171420
+Yijun Liu            1132416
+*/
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Router } from 'react-router-dom';
@@ -26,8 +35,8 @@ function App() {
   const [suburbData, setSuburbData] = useState(null)
 
   useEffect(() => {
-      getData('http://45.113.234.176:5000/state_geojson', setStateData)
-      getData('http://45.113.234.176:5000/suburb_geojson', setSuburbData)
+      getData('http://127.0.0.1:5000/state_geojson', setStateData)
+      getData('http://127.0.0.1:5000/suburb_geojson', setSuburbData)
   }, [])
   
   return (

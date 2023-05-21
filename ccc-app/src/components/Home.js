@@ -45,16 +45,15 @@ export default function Home() {
             </Grid>
             <Card><Box sx={{ mx: '2em', my: '1em' }}>
                 <Typography variant="b1" align="center" color="text.secondary" gutterBottom>
-                    This website is developed to visualise the result of the project 
-                    “Australia Social Media Analytics on the Cloud”. This project builds on Unimelb 
-                    Research Cloud and utilises data from twitter, Mastodon and Spatial Urban Data Observatory(SUDO) 
-                    to create a deep analysis of controversial topics on social media.
-                </Typography>
-                <Typography variant="b1" align="center" color="text.secondary" gutterBottom>
-                    The analysis investigates 3 different scenarios: Russian War, LGBT and time of people using social media.
-                    For all social media data, we try to retrieve information from the geometric location and sentiment,
+                    This website is developed to visualise the result of the project “Australia Social Media Analytics on the Cloud”. 
+                    This project builds on Unimelb Research Cloud and utilises data from twitter, Mastodon and Spatial Urban Data Observatory(SUDO) 
+                    to create a deep analysis of controversial topics on social media. <br></br>
+                    The analysis investigates 3 different scenarios: Ukraine-Russian War, LGBT and time of people using social media.
+                    For all Twitter data, we try to retrieve information from the geometric location and sentiment, 
                     and integrate this with socio-economic data from SUDO in order to obtain a well rounded result on different 
-                    aspects of each of our scenarios.
+                    aspects of each of our scenarios. As we are not able to extract location data for Mastodon, we will only be using it 
+                    as a comparison/contrast between social media platforms/users, as we cannot infer any socio-economic characteristics
+                    for Mastodon users.
                 </Typography>
                 </Box>
             </Card>
