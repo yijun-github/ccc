@@ -17,7 +17,7 @@ import Scenario1 from './pages/Scenario1';
 import Scenario2 from './pages/Scenario2';
 import Scenario3 from './pages/Scenario3';
 import NotFound from './components/NotFound';
-import Home from './components/Home';
+import Home from './pages/Home';
 import SideNav from './components/SideNav';
 import ScrollToTop from './components/ScrollToTop';
 import { getData } from './functions/fetchData';
@@ -36,8 +36,8 @@ function App() {
   const [suburbData, setSuburbData] = useState(null)
   const [title, setTitle] = useState('CCC Team 14')
   useEffect(() => {
-    getData('http://45.113.234.176:5000/state_geojson', setStateData)
-    getData('http://45.113.234.176:5000/suburb_geojson', setSuburbData)
+    getData('/state_geojson', setStateData)
+    getData('/suburb_geojson', setSuburbData)
   }, [])
 
   const updateTitle = (newTitle) => {
@@ -56,7 +56,7 @@ function App() {
         >
           <Toolbar />
           <Routes>
-            <Route path='/' element={<Home updateTitle={updateTitle} />} />
+            <Route path='/' element={<Home updateTitle={updateTitle} title="Home" />} />
             <Route path='/scenario1' element={<Scenario1 stateData={stateData} suburbData={suburbData} title="Scenario1: Ukraine Russia War" updateTitle={updateTitle} />} />
             <Route path='/scenario2' element={<Scenario2 stateData={stateData} suburbData={suburbData} title="Scenario2: LGBTQ" updateTitle={updateTitle} />} />
             <Route path='/scenario3' element={<Scenario3 title="Scenario3: Time" updateTitle={updateTitle} />} />

@@ -7,6 +7,9 @@ Zhihao Liang         1367102
 Jiqiang Chen         1171420
 Yijun Liu            1132416
 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
