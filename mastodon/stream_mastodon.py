@@ -1,5 +1,5 @@
 # COMP90024 Project 2 2023
-# Contributer
+# Contributor
 # Aobo Li              1172339
 # Pavith Samarakoon    1297058
 # Zhihao Liang         1367102
