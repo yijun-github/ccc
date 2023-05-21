@@ -48,7 +48,7 @@ def get_data():
         new = {"day": 0, "night": 0}
         for j in data:
             if j.key[0] == i:
-                if j.key[1] in ["22","23", "00", "01", "02", "03", "04", "05"]:
+                if ((int(j.key[1])+10)%24) in [22, 23, 0, 1, 2, 3, 4, 5]:
                      new["night"] += j.value
                 else:
                      new["day"] += j.value
@@ -74,7 +74,10 @@ def get_data0():
         new = {}
         for j in data:
             if j.key[0] ==i:
-                new[j.key[1]] = j.value
+                time = str((int(j.key[1])+10)%24)
+                if len(time) == 1: 
+                    time = "0" + time
+                new[time] = j.value
         data1[i] = new
     return jsonify(data1)
 
@@ -97,7 +100,7 @@ def get_data2():
         new = {"day": 0, "night": 0}
         for j in data:
             if j.key[0] ==i:
-                if j.key[1] in ["22","23", "00", "01", "02", "03", "04", "05"]:
+                if ((int(j.key[1])+10)%24) in [22, 23, 0, 1, 2, 3, 4, 5]:
                      new["night"] += j.value
                 else:
                      new["day"] += j.value
@@ -142,7 +145,7 @@ def get_data3():
         new = {"day": 0, "night": 0}
         for j in data:
             if j.key["suburb"].lower() == i:
-                if j.value in ["22","23", "00", "01", "02", "03", "04", "05"]:
+                if ((int(j.value)+10)%24) in [22, 23, 0, 1, 2, 3, 4, 5]:
                      new["night"] += j.value
                 else:
                      new["day"] += j.value
