@@ -1,12 +1,14 @@
-from mastodon import Mastodon, MastodonNotFoundError, MastodonRatelimitError, StreamListener
+from mastodon import Mastodon, MastodonNotFoundError, MastodonRatelimitError, StreamListener, MastodonNetworkError
 import csv, os, time, json
 import re
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, MarkupResemblesLocatorWarning
 from textblob import TextBlob
 import datetime
 import couchdb
 import nltk
 from nltk.stem import WordNetLemmatizer
+import time
+
 # Download the required NLTK resources
 nltk.download('punkt')
 nltk.download('wordnet')
@@ -19,10 +21,14 @@ import warnings
 translator = Translator()
 lemmatizer = WordNetLemmatizer()
 
-
+username = 'admin'
+password = r'1dTY1!PWM2'
+ip = '45.113.234.176'
+url = 'http://{}:{}@{}:5984/'.format(username, password, ip)
+ 
 # Connect to CouchDB
 # username:password@localhost:5984
-couch = couchdb.Server('http://admin:1231@127.0.0.1:5984/')
+couch = couchdb.Server(url)
 db_name = 'mastodon_data_v3'
 if db_name not in couch:
     db = couch.create(db_name)
@@ -32,20 +38,19 @@ else:
 
 m = Mastodon(
     api_base_url='https://mastodon.au',
-    access_token=os.environ['MASTODON_ACCESS_TOKEN']
+    access_token='Ji9hWsGcTpCyzly8ibuNyCvcimle0P6SMQDDzTdvJjk'
 )
-
 class Listener(StreamListener):
     def on_update(self, status):
-    
+
         # Parse the HTML content using BeautifulSoup, toots are formatted in html form
+        # some toots may raise MarkupResemblesLocatorWarning, skip these toots as they might create problems
         with warnings.catch_warnings(record=True) as w:
             soup = BeautifulSoup(status["content"], 'html.parser')
             for warning in w:
                 if isinstance(warning.message, MarkupResemblesLocatorWarning):
                     print(status["content"])
                     return
-
         # if there are hashtags in string, replace with whitespace
         content = soup.get_text().replace("#", " ")
         
@@ -53,7 +58,6 @@ class Listener(StreamListener):
         # check if content is empty, if it is, skip this toot
         if len(content) == 0:
             return
-        
         # get language of toot
         language = status['language']
         
@@ -72,12 +76,10 @@ class Listener(StreamListener):
         sentiment_score = blob.sentiment.polarity
         
         # get date of this toot
-        # select only year and month
+        # select only year and month and hour of toot
         status_date = status['created_at']
         status_date_str = status_date.strftime('%Y-%m-%d')[:-3]
         status_hour_str = status_date.hour
-        
-        
         # tokenise word for lemmatisation
         words = nltk.word_tokenize(data)
         # Lemmatize each word in the list of words
@@ -91,7 +93,6 @@ class Listener(StreamListener):
         
         RUwar = False
         RUwar_word_count = 0
-        
         # check if russia or ukraine is included in the sentence, otherwise it could be get data containing other keywords but not relate to Russian Ukrainian war
         if re.search(r'\b(russia|ukraine)\b', lemmatized_content):
             # if there are more than 2 of keywords occur in a toot, we'll consider it as war related
@@ -117,10 +118,10 @@ class Listener(StreamListener):
             if rental_word_count > 1:
                 rental = True
                 break
-        
         # Process the data as desired
         processed_data = {
             'date': status_date_str,
+            'hour':status_hour_str,
             'content': content,
             'translated_content': translated_content,
             'language': language,
@@ -132,6 +133,22 @@ class Listener(StreamListener):
         # Write the processed data to couchdb
         db.save(processed_data)
 
-
-listener = Listener()
-m.stream_public(listener)
+while True:
+    try:
+        listener = Listener()
+        m.stream_public(listener)
+    except MastodonNetworkError as e:
+        print(f"Caught MastodonNetworkError: {e}")
+        # sleep for a short period of time before attempting to reconnect
+        time.sleep(15)
+        m = Mastodon(
+            api_base_url='https://mastodon.au',
+            access_token='Ji9hWsGcTpCyzly8ibuNyCvcimle0P6SMQDDzTdvJjk'
+            )
+    except Exception as e:
+            print(f"Caught Exception: {e}")
+            time.sleep(15)
+            m = Mastodon(
+                api_base_url='https://mastodon.au',
+                access_token='Ji9hWsGcTpCyzly8ibuNyCvcimle0P6SMQDDzTdvJjk'
+                )
