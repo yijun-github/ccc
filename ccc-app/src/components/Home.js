@@ -59,6 +59,33 @@ export default function Home({ updateTitle }) {
                         and integrate this with socio-economic data from SUDO in order to obtain a well rounded result on different
                         aspects of each of our scenarios.
                     </Typography>
+                <Grid item xs={12} md={6} lg={4}>
+                    <ScenarioCard img={time_image} title="Time" link="./Scenario3" />
+                </Grid>
+            </Grid>
+        </Container>
+        <PageTitle title="Cloud Computing: Analytics" />
+        <Container maxWidth="lg" style={{ marginTop: '2em' }}>
+            <Grid container direction="row" justifyContent="center">
+                <Grid item>
+                    <PageSubtitle subtitle="Project Info" />
+                </Grid>
+                <Grid item>
+                    <SouthIcon />
+                </Grid>
+            </Grid>
+            <Card><Box sx={{ mx: '2em', my: '1em' }}>
+                <Typography variant="b1" align="center" color="text.secondary" gutterBottom>
+                    This website is developed to visualise the result of the project “Australia Social Media Analytics on the Cloud”. 
+                    This project builds on Unimelb Research Cloud and utilises data from twitter, Mastodon and Spatial Urban Data Observatory(SUDO) 
+                    to create a deep analysis of controversial topics on social media. <br></br>
+                    The analysis investigates 3 different scenarios: Ukraine-Russian War, LGBT and time of people using social media.
+                    For all Twitter data, we try to retrieve information from the geometric location and sentiment, 
+                    and integrate this with socio-economic data from SUDO in order to obtain a well rounded result on different 
+                    aspects of each of our scenarios. As we are not able to extract location data for Mastodon, we will only be using it 
+                    as a comparison/contrast between social media platforms/users, as we cannot infer any socio-economic characteristics
+                    for Mastodon users.
+                </Typography>
                 </Box>
                 </Card>
             </Container>
