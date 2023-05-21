@@ -11,6 +11,7 @@ import ukraine_russia_flag from "../img/ukraine-russia-flag.jpg";
 import lgbtq_image from "../img/lgbtq-image.jpg";
 import time_image from "../img/time-image.jpg";
 import question_image from "../img/question-mark.png";
+import blank_profile_image from "../img/blank-profile.png";
 
 import PS_photo from "../img/PS.jpg";
 import Aobo_photo from "../img/Aobo.jpg"
@@ -42,8 +43,20 @@ export default function Home() {
                     <SouthIcon />
                 </Grid>
             </Grid>
-            <Card>
-            <Typography variant="h6" align="center" color="text.secondary" gutterBottom>........FILL IN INFO........</Typography>
+            <Card><Box sx={{ mx: '2em', my: '1em' }}>
+                <Typography variant="b1" align="center" color="text.secondary" gutterBottom>
+                    This website is developed to visualise the result of the project 
+                    “Australia Social Media Analytics on the Cloud”. This project builds on Unimelb 
+                    Research Cloud and utilises data from twitter, Mastodon and Spatial Urban Data Observatory(SUDO) 
+                    to create a deep analysis of controversial topics on social media.
+                </Typography>
+                <Typography variant="b1" align="center" color="text.secondary" gutterBottom>
+                    The analysis investigates 3 different scenarios: Russian War, LGBT and time of people using social media.
+                    For all social media data, we try to retrieve information from the geometric location and sentiment,
+                    and integrate this with socio-economic data from SUDO in order to obtain a well rounded result on different 
+                    aspects of each of our scenarios.
+                </Typography>
+                </Box>
             </Card>
         </Container>
         <Container maxWidth="lg" style={{ marginTop: '2em' }}>
@@ -56,13 +69,13 @@ export default function Home() {
                     <TeamMemberCard img={PS_photo} firstName="Pavith" lastName="Samarakoon" />
                 </Grid>
                 <Grid item xs={6} md={4} lg={2}>
-                    <TeamMemberCard img={question_image} firstName="Zhihao" lastName="Liang" />
+                    <TeamMemberCard img={blank_profile_image} firstName="Zhihao" lastName="Liang" />
                 </Grid>
                 <Grid item xs={6} md={4} lg={2}>
-                    <TeamMemberCard img={question_image} firstName="Yijun" lastName="Liu" />
+                    <TeamMemberCard img={blank_profile_image} firstName="Yijun" lastName="Liu" />
                 </Grid>
                 <Grid item xs={6} md={4} lg={2}>
-                    <TeamMemberCard img={question_image} firstName="Jiqiang" lastName="Chen" />
+                    <TeamMemberCard img={blank_profile_image} firstName="Jiqiang" lastName="Chen" />
                 </Grid>
             </Grid>
         </Container>

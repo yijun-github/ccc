@@ -1,10 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Scenario1Map from "./war/Scenario1Map";
-import StackedBarLangSent from "./StackedBarLangSent";
-import BarAveLangSent from "./BarAveLangSent";
-import BarLang from "./BarLang";
-import PieLangPos from "./PieLangPos";
-import LinesByHour from "./time/LinesByHour";
 
 import { 
   Typography, Card,
@@ -15,62 +9,92 @@ import { getData, getDayNightData } from "../functions/fetchData";
 import BarLangDayNight from "./time/BarLangDayNight";
 import BarLangDayNightSortLang from "./time/BarLangDayNightSortLang";
 import ChartTitle from "./ChartTitle";
+import LinesHourly from "./time/LinesHourly";
+import LinesHourlyNormalised from "./time/LinesHourlyNormalised";
 
 
-function Scenario3() {
+function Scenario3({ stateData, suburbData }) {
 
   const [mastHourly, setMastHourly] = useState(null)
   const [mastDayNight, setMastDayNight] = useState(null)
   const [mastLangHourly, setMastLangHourly] = useState(null)
   const [mastLangDayNight, setMastLangDayNight] = useState(null)
+  const [twitterHourly, setTwitterHourly] = useState(null)
+  const [twitterDayNight, setTwitterDayNight] = useState(null)
+  const [twitterStateHourly, setTwitterStateHourly] = useState(null)
+  const [twitterLangHourly, setTwitterLangHourly] = useState(null)
   const [twitterLangDayNight, setTwitterLangDayNight] = useState(null)
 
   useEffect(() => {
-    //getData('http://127.0.0.1:5000/general/mastondon/count_hourly', setMastHourly)
-    //getData('http://127.0.0.1:5000/general/mastondon/count_day_night', setMastDayNight)
-    //getData('http://127.0.0.1:5000/general/mastodon/language_hour', setMastLangHourly)
-    //getData('http://127.0.0.1:5000/general/mastodon/language_day_night', setMastLangDayNight)
+    getData('/general/mastondon/count_hourly', setMastHourly)
+    getData('/general/mastondon/count_day_night', setMastDayNight)
+    //getData('/general/mastodon/language_hour', setMastLangHourly)
+    getDayNightData('/general/mastodon/language_day_night', setMastLangDayNight)
+    getData('/general/twitter/state_hourly_tweet', setTwitterStateHourly)
+    //getData('/general/twitter/language_hour', setTwitterLangHourly)
+    getDayNightData('/general/twitter/language_day_night', setTwitterLangDayNight)
   }, [])
 
   return (
     <>
     <PageTitle title="Time" />
-    <Container maxWidth="lg" style={{ marginTop: '0' }}>
-      <div className='div--state-sent-map'>
-        <Scenario1Map />
-      </div>
-    </Container>
     <Container style={{ marginTop: '2em', display: 'flex' }}>
       <Grid container spacing={2} justifyContent="center">
-        <Grid item xs={12} md={12} lg={8}>
-          <Card justifyContent="center">
-            <CardContent>
-              <LinesByHour />
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card justifyContent="center">
-            <CardContent>
-              <StackedBarLangSent />
-            </CardContent>
-          </Card>
-        </Grid>
+        {
+          twitterStateHourly && ( mastHourly &&
+            <>
+            <Grid item xs={12} md={12} lg={8}>
+              <Card justifyContent="center">
+                <CardContent>
+                  <LinesHourly data={twitterStateHourly} mastData={mastHourly} />
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6} lg={4}>
+              <Card justifyContent="center">
+                <CardContent>
+                  <Typography>Analysis</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            </>
+          )
+        }
+        {
+          twitterStateHourly && ( mastHourly &&
+            <>
+            <Grid item xs={12} md={6} lg={4}>
+              <Card justifyContent="center">
+                <CardContent>
+                  <Typography>Analysis</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={12} lg={8}>
+              <Card justifyContent="center">
+                <CardContent>
+                  <LinesHourlyNormalised data={twitterStateHourly} mastData={mastHourly} />
+                </CardContent>
+              </Card>
+            </Grid>
+            </>
+          )
+        }
         {
           mastLangDayNight &&
           <>
           <Grid item xs={12} md={6} lg={4}>
             <Card justifyContent="center">
               <CardContent>
-                <BarLangDayNight data={mastLangDayNight}/>
+                <ChartTitle title="Mastodon Day/Night (sort Total)" />
+                <BarLangDayNight data={mastLangDayNight.slice(1)}/> {/* Remove english with slice */}
               </CardContent>
             </Card>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <Card justifyContent="center">
               <CardContent>
-                <ChartTitle title="Day/Night Tweets (sort Language)" />
-                <BarLangDayNightSortLang data={mastLangDayNight}/>
+                <Typography>Analysis</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -82,38 +106,43 @@ function Scenario3() {
           <Grid item xs={12} md={6} lg={4}>
             <Card justifyContent="center">
               <CardContent>
-                <BarLangDayNight data={twitterLangDayNight}/>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Card justifyContent="center">
-              <CardContent>
-                <ChartTitle title="Day/Night Tweets (sort Language)" />
-                <BarLangDayNightSortLang data={twitterLangDayNight}/>
+              <ChartTitle title="Twitter Day/Night (sort Total)" />
+                <BarLangDayNight data={twitterLangDayNight.slice(2)}/> {/* Remove english and undefined with slice */}
               </CardContent>
             </Card>
           </Grid>
           </>
         }
-        <Grid item xs={12} md={6} lg={4}>
-          <Card justifyContent="center">
-            <CardContent>
-              <BarAveLangSent />
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card justifyContent="center">
-            <CardContent>
-              <BarLang />
-            </CardContent>
-          </Card>
-        </Grid>
+        {
+          mastLangDayNight &&
+          <>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <ChartTitle title="Mastodon Day/Night (sort Language)" />
+                <BarLangDayNightSortLang data={mastLangDayNight.slice(1)}/> {/* Remove english with slice */}
+              </CardContent>
+            </Card>
+          </Grid>
+          </>
+        }
+        {
+          twitterLangDayNight &&
+          <>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <ChartTitle title="Twitter Day/Night (sort Language)" />
+                <BarLangDayNightSortLang data={twitterLangDayNight.slice(2)}/> {/* Remove english and undefined with slice */}
+              </CardContent>
+            </Card>
+          </Grid>
+          </>
+        }
       </Grid>
     </Container>
     </>
-  );
+      );
 }
 
 export default Scenario3;

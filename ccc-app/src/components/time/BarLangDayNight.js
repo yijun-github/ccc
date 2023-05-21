@@ -16,15 +16,18 @@ import { Container, Typography } from "@mui/material";
 
 export default function BarLangDayNight({ data }) {
     
-    // Remove english and undefined, and assign ranks
-    var plotData = data.slice(2)
-    Object.keys(plotData).forEach((key, index) => {
-      plotData[key].rank = index+1
-    })
+    // Assign ranks
+    const [plotData, setPlotData] = useState(null)
+
+    useEffect(() => {
+        Object.keys(data).forEach((key, index) => {
+          data[key].rank = index+1
+        })
+        setPlotData(data)
+    }, [])
 
     return (
         <Container>
-            <ChartTitle title="Day/Night Tweets (sort Total)" />
             <BarChart
                 stackOffset="none"
                 width={300}
@@ -47,7 +50,7 @@ export default function BarLangDayNight({ data }) {
                 <Bar dataKey="day" fill="#00BBBB" stackId="stack" />
                 <Bar dataKey="night" fill="#DD00DD" stackId="stack" />
             </BarChart>
-            <Typography variant="caption" align="center">Excludes English (en) and undefined (und)</Typography>
+            <Typography variant="caption" align="center">Use bar to select range. Excludes English (en) and undefined (und)</Typography>
         </Container>
   );
 }

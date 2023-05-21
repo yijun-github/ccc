@@ -17,7 +17,7 @@ def get_data():
     data = {}
     for row in results:
         if row.key != None:
-            data[row.key] = row.value
+            data[(row.key+10)%24] = row.value
 
     return jsonify(data)
 
@@ -28,7 +28,7 @@ def get_data2():
     data = {"day": 0, "night": 0}
     for row in results:
         if row.key != None:
-            if row.key in [0, 1, 2, 3, 4, 5, 22, 23]:
+            if (row.key+10)%24 in [0, 1, 2, 3, 4, 5, 22, 23]:
                 data["night"] += row.value
             else:
                 data["day"] += row.value
@@ -53,7 +53,7 @@ def get_data3():
         new = {}
         for j in data:
             if j.key[0] == i:
-                new[j.key[1]] = j.value
+                new[(j.key[1]+10)%24] = j.value
         data1[i] = new.copy()
     return jsonify(data1)
 
@@ -76,7 +76,7 @@ def get_data4():
         new = {"day":0, "night":0}
         for j in data:
             if j.key[0] == i:
-                if j.key[1] in [0, 1, 2, 3, 4, 5, 22, 23]:
+                if (j.key[1]+10)%24 in [0, 1, 2, 3, 4, 5, 22, 23]:
                     new["night"] += j.value
                 else:
                     new["day"] += j.value

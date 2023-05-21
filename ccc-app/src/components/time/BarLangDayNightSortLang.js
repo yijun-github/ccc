@@ -12,13 +12,16 @@ import {
   Brush
 } from "recharts";
 import ChartTitle from "../ChartTitle";
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 
 export default function BarLangDayNightSortLang({ data }) {
     
-    // Remove english and undefined, and assign ranks
-    var plotData = data.slice(2)
-    plotData.sort((a, b) => a.language.localeCompare(b.language))
+    const [plotData, setPlotData] = useState(null)
+
+    useEffect(() => {
+        data.sort((a, b) => a.language.localeCompare(b.language))
+        setPlotData(data)
+    }, [])
 
     return (
         <Container>
@@ -44,7 +47,7 @@ export default function BarLangDayNightSortLang({ data }) {
                 <Bar dataKey="day" fill="#00BBBB" stackId="stack" />
                 <Bar dataKey="night" fill="#DD00DD" stackId="stack" />
             </BarChart>
-            
+            <Typography variant="caption" align="center">Use bar to select range. Excludes English (en) and undefined (und)</Typography>
         </Container>
   );
 }

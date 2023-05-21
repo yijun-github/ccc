@@ -1,15 +1,12 @@
 import React from "react";
 import { CartesianGrid, Legend, Line, LineChart, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
 import ChartTitle from "../ChartTitle";
+import { round } from "../../functions/round";
 
 
 export default function LinesStateMonth({ data }) {
 
     var monthData = []
-
-    function round(x, nDecimal) {
-      return (Math.round((x + Number.EPSILON) * (10**nDecimal)) / (10**nDecimal))
-    }
 
     Object.keys(data).forEach(state => {
         Object.keys(data[state]).forEach(month => {
@@ -33,11 +30,11 @@ export default function LinesStateMonth({ data }) {
         <LineChart width={700} height={300} data={monthData}
             margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            <YAxis />
+            <XAxis dataKey="month" name="YYYY-MM" label={{ value: 'YYYY-MM', angle: 0, position: 'insideBottomRight', offset: -10 }}/>
+            <YAxis unit="%" />
             <ReferenceLine y={0} stroke="black" />
             <Tooltip />
-            <Legend />
+            <Legend align='left' verticalAlign='bottom' />
             {
               Object.keys(data).map((state, index) => (
                 <Line type="natural" dataKey={state} stroke={colors[index]} />

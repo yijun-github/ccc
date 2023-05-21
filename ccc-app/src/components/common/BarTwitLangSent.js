@@ -45,7 +45,7 @@ export default function BarTwitterLangSent({ data }) {
                 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="language" />
+                <XAxis dataKey="language" name="Language" label={{ value: 'Language', angle: 0, position: 'insideBottomRight', offset: -10 }} />
                 <YAxis />
                 <Tooltip />
                 <Legend />

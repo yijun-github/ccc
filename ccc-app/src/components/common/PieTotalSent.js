@@ -83,10 +83,10 @@ export default function PieTotalSent({ mastProp, twitterProp }) {
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
             data={twitterData}
-            cx={200}
+            cx={220}
             cy={150}
-            innerRadius={50}
-            outerRadius={80}
+            innerRadius={60}
+            outerRadius={100}
             fill="#03c2fc"
             dataKey="count"
             onMouseEnter={onPieEnter}
@@ -98,10 +98,10 @@ export default function PieTotalSent({ mastProp, twitterProp }) {
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
             data={mastData}
-            cx={500}
+            cx={530}
             cy={150}
-            innerRadius={50}
-            outerRadius={80}
+            innerRadius={60}
+            outerRadius={100}
             fill="#6734eb"
             dataKey="count"
             onMouseEnter={onPieEnter}

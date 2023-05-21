@@ -12,7 +12,7 @@ export default function SuburbLgbtLayer(props) {
         const colors = ['#a50026','#d73027','#f46d43','#fdae61','#fee090','#ffffbf',
                         '#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'] //Diverging-Red-Blu
 
-        const range = 0.6
+        const range = 0.55
         const mid = 0.5
         const val = (x-mid)/range + 0.5
 

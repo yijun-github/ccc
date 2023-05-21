@@ -13,7 +13,8 @@ import LinesStateMonth from "./common/LinesStateMonth";
 import BarTwitterLangSent from "./common/BarTwitLangSent";
 import BarMastLangSent from "./common/BarMastLangSent";
 import LinesStateMonthMag from "./common/LinesStateMonthMag";
-import ScatterWarIncEduSent from "./war/ScatterWarIncEduSent";
+import ScatterWarIncEdu from "./war/ScatterWarIncEdu";
+import ScatterwarElectPartdiff from "./war/ScatterWarElecPartdiff";
 
 
 function Scenario1({ stateData=null, suburbData=null, landSent=null }) {
@@ -26,11 +27,11 @@ function Scenario1({ stateData=null, suburbData=null, landSent=null }) {
   const [twitterProp, setTwitterProp] = useState(null)
 
   useEffect(() => {
-      getData('http://127.0.0.1:5000/war/twitter/monthly_state_sentiment', setStateMonthly)
-      getData('http://127.0.0.1:5000/war/mastondon/proportion_sentiment', setMastProp)
-      getData('http://127.0.0.1:5000/war/twitter/total_sentiment', setTwitterProp)
-      getLangSentData('http://127.0.0.1:5000/war/twitter/sentiment_language', setTwitterLangSent)
-      getLangSentData('http://127.0.0.1:5000/war/mastondon/sentiment_lang', setMastLangSent)
+      getData('/war/twitter/monthly_state_sentiment', setStateMonthly)
+      getData('/war/mastondon/proportion_sentiment', setMastProp)
+      getData('/war/twitter/total_sentiment', setTwitterProp)
+      getLangSentData('/war/twitter/sentiment_language', setTwitterLangSent)
+      getLangSentData('/war/mastondon/sentiment_lang', setMastLangSent)
   }, [])
 
   return (
@@ -127,7 +128,7 @@ function Scenario1({ stateData=null, suburbData=null, landSent=null }) {
           <Grid item xs={12} md={12} lg={8}>
             <Card justifyContent="center">
               <CardContent>
-                <ScatterWarIncEduSent data={suburbData} />
+                <ScatterWarIncEdu data={suburbData} />
               </CardContent>
             </Card>
           </Grid>
@@ -135,6 +136,25 @@ function Scenario1({ stateData=null, suburbData=null, landSent=null }) {
             <Card justifyContent="center">
               <CardContent>
                 <Typography>Analysis</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          </>
+        }
+        {
+          suburbData != null &&
+          <>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <Typography>Analysis</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={12} lg={8}>
+            <Card justifyContent="center">
+              <CardContent>
+                <ScatterwarElectPartdiff data={suburbData} />
               </CardContent>
             </Card>
           </Grid>

@@ -10,8 +10,8 @@ export default function IncomeLayer(props) {
     const suburbData = props.data
 
     function getColor(x) {
-        const colors = ['#a50026','#d73027','#f46d43','#fdae61','#fee090','#ffffbf',
-                        '#e0f3f8','#abd9e9','#74add1','#4575b4','#313695'] //Diverging-Red-Blu
+        const colors = ['#440154','#482475','#414487','#355f8d','#2a788e','#21918c',
+        '#22a884','#44bf70','#7ad151','#bddf26','#fde725'] //Viridis
 
         const range = 100000
         const mid = 40000
@@ -47,7 +47,6 @@ export default function IncomeLayer(props) {
         var popUpText = `<div style={text-align: center, margin: 5px}>
             <b>Suburb: ${feature.properties.SAL_NAME21}</b>
             <p><i>Median Income ($): ${round(feature.properties["median_income"], 0)}</i></p>
-            <p><i>Degree %: ${round(feature.properties["uni"]*100, 2)}</i></p>
             </div>`
         if (feature.properties && (feature.properties["median_income"] != null)) {
             layer.bindPopup(popUpText);

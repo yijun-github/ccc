@@ -2,6 +2,7 @@
   "name": "ccc-app",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://45.113.234.176:5000/",
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",

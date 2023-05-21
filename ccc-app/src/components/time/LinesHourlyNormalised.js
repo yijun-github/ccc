@@ -1,19 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { CartesianGrid, Legend, Line, LineChart, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
 import ChartTitle from "../ChartTitle";
+import { round } from "../../functions/round";
 
 
-export default function LinesHourly({ data, mastData }) {
+export default function LinesHourlyNormalised({ data, mastData }) {
 
   var hourData = []
+
+  //Calculate max count by state
+  var stateMax = {}
+  Object.keys(data).forEach(state => {
+    let max = 0
+    Object.keys(data[state]).forEach(hour => {
+      max = (max >= data[state][hour]) ? max : data[state][hour]
+    })
+    stateMax[state] = max
+  })
+
+  var max = 0
+  Object.keys(mastData).forEach(hour => {
+    max = (max >= mastData[hour]) ? max : mastData[hour]
+  })
+  stateMax['mastodon'] = max
 
   Object.keys(data).forEach(state => {
     Object.keys(data[state]).forEach(hour => {
       if (hourData[hour] == undefined) {hourData[hour] = {}}
-      hourData[hour][state] = data[state][hour]
-      var mastKey = (hour[0]=="0") ? hour[1] : hour
-      hourData[hour]["mastodon"] = mastData[mastKey]
+      hourData[hour][state] = round(data[state][hour]/stateMax[state], 3)
     })
+  })
+
+  Object.keys(mastData).forEach(hour => {
+    var hourKey = (hour.length == 1) ? "0" + hour : hour
+    hourData[hourKey]["mastodon"] = round(mastData[hour]/stateMax['mastodon'], 3)
   })
 
   hourData = Object.keys(hourData).map(hour => {
@@ -27,7 +47,7 @@ export default function LinesHourly({ data, mastData }) {
 
   return(
     <>
-      <ChartTitle title="Number of tweets (per state) and toots by time of day" />
+      <ChartTitle title="Normalised tweets (per state) and toots by time of day" />
       <LineChart width={700} height={300} data={hourData}
           margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />

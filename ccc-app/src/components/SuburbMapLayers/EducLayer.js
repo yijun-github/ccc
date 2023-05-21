@@ -11,7 +11,7 @@ export default function EducLayer(props) {
 
     function getColor(x) {
         const colors = ['#440154','#482475','#414487','#355f8d','#2a788e','#21918c',
-                        '#22a884','#44bf70','#7ad151','#bddf26','#fde725'] //Diverging-Red-Blu
+        '#22a884','#44bf70','#7ad151','#bddf26','#fde725'] //Viridis
 
         const range = 0.6
         const mid = 0.25
@@ -46,7 +46,6 @@ export default function EducLayer(props) {
     function popup(feature, layer) {
         var popUpText = `<div style={text-align: center, margin: 5px}>
             <b>Suburb: ${feature.properties.SAL_NAME21}</b>
-            <p><i>Median Income ($): ${round(feature.properties["median_income"], 0)}</i></p>
             <p><i>Degree %: ${round(feature.properties["uni"]*100, 2)}</i></p>
             </div>`
         if (feature.properties && (feature.properties["uni"] != null)) {

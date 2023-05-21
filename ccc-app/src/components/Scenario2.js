@@ -12,7 +12,8 @@ import LinesStateMonthMag from "./common/LinesStateMonthMag";
 import BarTwitterLangSent from "./common/BarTwitLangSent";
 import BarMastLangSent from "./common/BarMastLangSent";
 import PieTotalWarSent from "./common/PieTotalSent";
-import ScatterLgbtIncEduSent from "./lgbtq/ScatterLgbtIncEduSent";
+import ScatterLgbtIncEdu from "./lgbtq/ScatterLgbtIncEdu";
+import ScatterLgbtElectPartdiff from "./lgbtq/ScatterLgbtElecPartdiff";
 
 
 
@@ -25,11 +26,11 @@ function Scenario2({ stateData=null, suburbData=null, landSent=null }) {
   const [twitterProp, setTwitterProp] = useState(null)
 
   useEffect(() => {
-      getData('http://127.0.0.1:5000/lgbt/twitter/monthly_state_sentiment', setStateMonthly)
-      getData('http://127.0.0.1:5000/lgbt/mastondon/proportion_sentiment', setMastProp)
-      getData('http://127.0.0.1:5000/lgbt/twitter/total_sentiment', setTwitterProp)
-      getLangSentData('http://127.0.0.1:5000/lgbt/twitter/sentiment_language', setTwitterLangSent)
-      getLangSentData('http://127.0.0.1:5000/lgbt/mastondon/sentiment_lang', setMastLangSent)
+      getData('/lgbt/twitter/monthly_state_sentiment', setStateMonthly)
+      getData('/lgbt/twitter/total_sentiment', setTwitterProp)
+      getLangSentData('/lgbt/twitter/sentiment_language', setTwitterLangSent)
+      getLangSentData('/lgbt/mastondon/sentiment_lang', setMastLangSent)
+      getData('/lgbt/mastondon/overall_sentiment', setMastProp)
   }, [])
 
   return (
@@ -126,7 +127,7 @@ function Scenario2({ stateData=null, suburbData=null, landSent=null }) {
           <Grid item xs={12} md={12} lg={8}>
             <Card justifyContent="center">
               <CardContent>
-                <ScatterLgbtIncEduSent data={suburbData} />
+                <ScatterLgbtIncEdu data={suburbData} />
               </CardContent>
             </Card>
           </Grid>
@@ -134,6 +135,25 @@ function Scenario2({ stateData=null, suburbData=null, landSent=null }) {
             <Card justifyContent="center">
               <CardContent>
                 <Typography>Analysis</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          </>
+        }
+        {
+          suburbData != null &&
+          <>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card justifyContent="center">
+              <CardContent>
+                <Typography>Analysis</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={12} lg={8}>
+            <Card justifyContent="center">
+              <CardContent>
+                <ScatterLgbtElectPartdiff data={suburbData} />
               </CardContent>
             </Card>
           </Grid>
