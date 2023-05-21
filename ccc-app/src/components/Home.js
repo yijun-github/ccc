@@ -1,3 +1,12 @@
+/*
+COMP90024 Project 2 2023
+Contributer
+Aobo Li              1172339
+Pavith Samarakoon    1297058
+Zhihao Liang         1367102
+Jiqiang Chen         1171420
+Yijun Liu            1132416
+*/
 import React from "react";
 import { Box, Card, CardContent, CardMedia, Container, Grid, Typography } from "@mui/material";
 import PageTitle from "./PageTitle";
@@ -6,11 +15,9 @@ import ScenarioCard from "./ScenarioCard"
 import PageSubtitle from "./PageSubtitle";
 import SouthIcon from '@mui/icons-material/South';
 
-import home_image from "../img/homeImage1.png"
 import ukraine_russia_flag from "../img/ukraine-russia-flag.jpg";
 import lgbtq_image from "../img/lgbtq-image.jpg";
 import time_image from "../img/time-image.jpg";
-import question_image from "../img/question-mark.png";
 import blank_profile_image from "../img/blank-profile.png";
 
 import PS_photo from "../img/PS.jpg";

@@ -35,13 +35,13 @@ function Scenario3({ stateData, suburbData }) {
   const [twitterLangDayNight, setTwitterLangDayNight] = useState(null)
 
   useEffect(() => {
-    getData('http://127.0.0.1:5000/general/mastondon/count_hourly', setMastHourly)
-    getData('http://127.0.0.1:5000/general/mastondon/count_day_night', setMastDayNight)
-    //getData('http://127.0.0.1:5000/general/mastodon/language_hour', setMastLangHourly)
-    getDayNightData('http://127.0.0.1:5000/general/mastodon/language_day_night', setMastLangDayNight)
-    getData('http://127.0.0.1:5000/general/twitter/state_hourly_tweet', setTwitterStateHourly)
-    //getData('http://127.0.0.1:5000/general/twitter/language_hour', setTwitterLangHourly)
-    getDayNightData('http://127.0.0.1:5000/general/twitter/language_day_night', setTwitterLangDayNight)
+    getData('http://45.113.234.176/general/mastondon/count_hourly', setMastHourly)
+    getData('http://45.113.234.176/general/mastondon/count_day_night', setMastDayNight)
+    //getData('http://45.113.234.176/general/mastodon/language_hour', setMastLangHourly)
+    getDayNightData('http://45.113.234.176/general/mastodon/language_day_night', setMastLangDayNight)
+    getData('http://45.113.234.176/general/twitter/state_hourly_tweet', setTwitterStateHourly)
+    //getData('http://45.113.234.176/general/twitter/language_hour', setTwitterLangHourly)
+    getDayNightData('http://45.113.234.176/general/twitter/language_day_night', setTwitterLangDayNight)
   }, [])
 
   return (

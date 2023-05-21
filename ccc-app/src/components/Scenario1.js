@@ -36,11 +36,11 @@ function Scenario1({ stateData=null, suburbData=null, landSent=null }) {
   const [twitterProp, setTwitterProp] = useState(null)
 
   useEffect(() => {
-      getData('http://127.0.0.1:5000/war/twitter/monthly_state_sentiment', setStateMonthly)
-      getData('http://127.0.0.1:5000/war/mastondon/proportion_sentiment', setMastProp)
-      getData('http://127.0.0.1:5000/war/twitter/total_sentiment', setTwitterProp)
-      getLangSentData('http://127.0.0.1:5000/war/twitter/sentiment_language', setTwitterLangSent)
-      getLangSentData('http://127.0.0.1:5000/war/mastondon/sentiment_lang', setMastLangSent)
+      getData('http://45.113.234.176//war/twitter/monthly_state_sentiment', setStateMonthly)
+      getData('http://45.113.234.176//war/mastondon/proportion_sentiment', setMastProp)
+      getData('http://45.113.234.176//war/twitter/total_sentiment', setTwitterProp)
+      getLangSentData('http://45.113.234.176//war/twitter/sentiment_language', setTwitterLangSent)
+      getLangSentData('http://45.113.234.176//war/mastondon/sentiment_lang', setMastLangSent)
   }, [])
 
   return (

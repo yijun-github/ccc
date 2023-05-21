@@ -18,7 +18,6 @@ export function getData(url, setData) {
     .then((res) => res.json())
     .then((data) => {
       setData(data)
-      console.log(data)
       console.log(`Fetch ${url} complete`)
     })
     .catch(err => {
@@ -49,7 +48,6 @@ export function getLangSentData(url, setData) {
   })
   .then((data) => {
       setData(data)
-      console.log(data)
       console.log(`Fetch ${url} complete`)
   })
   .catch(err => {
@@ -72,7 +70,6 @@ export function getRUwarData(url, setData) {
     .then((data) => Object.keys(data).map(key => ({"sentiment_type": key, "count": data[key]})))
     .then((data) => {
         setData(data)
-        console.log(data)
         console.log(`Fetch ${url} complete`)
     })
     .catch(err => {
@@ -105,7 +102,6 @@ export function getDayNightData(url, setData) {
     })
     .then((data) => {
         setData(data)
-        console.log(data)
         console.log(`Fetch ${url} complete`)
     })
     .catch(err => {

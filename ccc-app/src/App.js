@@ -35,8 +35,8 @@ function App() {
   const [suburbData, setSuburbData] = useState(null)
 
   useEffect(() => {
-      getData('http://127.0.0.1:5000/state_geojson', setStateData)
-      getData('http://127.0.0.1:5000/suburb_geojson', setSuburbData)
+      getData('http://45.113.234.176/state_geojson', setStateData)
+      getData('http://45.113.234.176/suburb_geojson', setSuburbData)
   }, [])
   
   return (
