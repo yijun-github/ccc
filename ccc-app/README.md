@@ -1,6 +1,6 @@
 # COMP90024 Project 2 2023
 
-## Contributer
+## Contributor
 
 Aobo Li              1172339
 
