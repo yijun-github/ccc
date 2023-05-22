@@ -181,11 +181,11 @@ function Scenario1({ stateData = null, suburbData = null, landSent = null, updat
                   <CardContent>
                     <Typography variant="b1">
                       <b>Median Income vs proportion of negative sentiment</b><br />
-                      In the graph comparing medium income with proportion of negative sentiment, there seem to have some
-                      relation between education level, medium income and sentiment.
-                      Suburbs with more than 25% of residents holding a Bachelor degree or above has a medium of about $53,000
-                      medium income, with a proportion of negative sentiment concentrated at around 0.6. Suburbs with less than
-                      25% of residents holding a Bachelor degree or above has a medium of about $39,000 medium income, while also
+                      In the graph comparing median income with proportion of negative sentiment, there seem to have some
+                      relation between education level, median income and sentiment.
+                      Suburbs with more than 25% of residents holding a Bachelor degree or above has a mean of about $53,000
+                      median income, with a proportion of negative sentiment concentrated at around 0.6. Suburbs with less than
+                      25% of residents holding a Bachelor degree or above has an average of about $39,000 median income, while also
                       have a more disperse distribution of negative sentiment proportion.
                     </Typography>
                   </CardContent>
