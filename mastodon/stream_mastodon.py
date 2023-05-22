@@ -140,7 +140,7 @@ class Listener(StreamListener):
         }
 
         # Write the processed data to couchdb
-        #db.save(processed_data)
+        db.save(processed_data)
 
 while True:
     try:
@@ -150,6 +150,7 @@ while True:
         print(f"Caught MastodonNetworkError: {e}")
         # sleep for a short period of time before attempting to reconnect
         time.sleep(15)
+        # re-initiate mastodon api in case of an error
         m = Mastodon(
             api_base_url='https://mastodon.au',
             access_token='Ji9hWsGcTpCyzly8ibuNyCvcimle0P6SMQDDzTdvJjk'
@@ -157,6 +158,7 @@ while True:
     except Exception as e:
             print(f"Caught Exception: {e}")
             time.sleep(15)
+            # re-initiate mastodon api in case of an error
             m = Mastodon(
                 api_base_url='https://mastodon.au',
                 access_token='Ji9hWsGcTpCyzly8ibuNyCvcimle0P6SMQDDzTdvJjk'
