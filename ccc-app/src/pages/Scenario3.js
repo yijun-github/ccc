@@ -130,7 +130,7 @@ function Scenario3({ stateData, suburbData, updateTitle,title }) {
                       Languages, excluding English is analysed based on the time tweet/toot is posted. Japanese is the language
                       that tweeted the most on Twitter, whereas German is the most frequent languages of Mastodon's toots.
                       Spanish and Chinese top the list of posts on both social media, which is understandable given the popularity
-                      of both languages. Generally speaking, Mastodon has a higher proportion of toots posted during night time
+                      of both languages. Generally speaking, Mastodon has a higher proportion of toots posted during night time (10pm-5am)
                       compare to Twitter. There are two possible reason for this finding. Mastodon is a new social media platform
                       launched in 2016, so there might be a higher proportion of young users who stayed up late. Another possible
                       reason is that, Mastodon do not contain post location information, hence anyone around the world could post
