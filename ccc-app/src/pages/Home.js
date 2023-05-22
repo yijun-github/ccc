@@ -16,6 +16,8 @@ import blank_profile_image from "../img/blank-profile.png";
 import PS_photo from "../img/PS.jpg";
 import Aobo_photo from "../img/Aobo.jpg"
 import zhihao_photo from "../img/zhihao.jpg"
+import yijun_photo from "../img/yijun.jpg"
+import jiqiang_photo from "../img/jiqiang.jpg"
 
 export default function Home({ updateTitle, title }) {
     useEffect(() => {
@@ -76,10 +78,10 @@ export default function Home({ updateTitle, title }) {
                         <TeamMemberCard img={zhihao_photo} firstName="Zhihao" lastName="Liang" />
                     </Grid>
                     <Grid item xs={6} md={4} lg={2}>
-                        <TeamMemberCard img={blank_profile_image} firstName="Yijun" lastName="Liu" />
+                        <TeamMemberCard img={yijun_photo} firstName="Yijun" lastName="Liu" />
                     </Grid>
                     <Grid item xs={6} md={4} lg={2}>
-                        <TeamMemberCard img={blank_profile_image} firstName="Jiqiang" lastName="Chen" />
+                        <TeamMemberCard img={jiqiang_photo} firstName="Jiqiang" lastName="Chen" />
                     </Grid>
                 </Grid>
             </Container>
