@@ -6,9 +6,9 @@ This repository contains the source code for our 'COMP90024 Assignment 2 - Socia
 
 **YouTube Demos:**
 
-Walkthrough of deployment:
+* Walkthrough of deployment:
 
-Walkthrough of frontend/UI: [https://youtu.be/7oCPjouVqUs](https://youtu.be/ZwgfauaIFXg)
+* Walkthrough of frontend/UI: [https://youtu.be/7oCPjouVqUs](https://youtu.be/ZwgfauaIFXg)
 
 ## System architecture
 
