@@ -20,4 +20,4 @@ jobs:
         host: ${{ secrets.SERVER_HOST }}
         username: root
         key: ${{ secrets.MAIN_KEY }}
-        script: "~/deploy_front_end.sh"
+        script: ". ~/deploy_front_end.sh"
