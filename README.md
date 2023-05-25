@@ -28,7 +28,7 @@ COMP90024 Project 2 2023
 
 ## Repository structure
 
-* `Data/` -- SUDO datasets, ASGS boundary geoJSONs, and jupyter notebook for processing the geospatial data
+* `Data/` -- SUDO datasets, ASGS boundary geoJSONs, and script for processing the geospatial data
 * `mastodon/` -- Mastodon toot harvester
 * `twitter/` -- Script for processing Twitter data
 * `back-end/` -- RESTful API
