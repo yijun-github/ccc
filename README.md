@@ -6,7 +6,7 @@ This repository contains the source code for our 'COMP90024 Assignment 2 - Socia
 
 **YouTube Demos:**
 
-* Walkthrough of deployment:
+* Walkthrough of Couchdb deployment: https://youtu.be/D1nRjd29T2c
 
 * Walkthrough of frontend/UI: [https://youtu.be/7oCPjouVqUs](https://youtu.be/ZwgfauaIFXg)
 
@@ -33,3 +33,4 @@ COMP90024 Project 2 2023
 * `twitter/` -- Script for processing Twitter data
 * `back-end/` -- RESTful API
 * `ccc-app/` -- Frontend web app
+* `couchdb design docs/` -- Design documents we used on Couchdb
