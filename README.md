@@ -14,7 +14,7 @@ This repository contains the source code for our 'COMP90024 Assignment 2 - Socia
 
 This project has been deployed on the [University of Melbourne Research Cloud (MRC)](https://dashboard.cloud.unimelb.edu.au/), using a range of technologies including [Apache CouchDB](https://couchdb.apache.org), [Ansible](https://www.ansible.com), [Docker](https://www.docker.com).
 
-The report available [here] discusses the project in greater detail.
+The report available [here](https://github.com/yijun-github/ccc/blob/main/Final%20Report/CCC_assignment2_team14_report.pdf) discusses the project in greater detail.
 
 # Contributor
 
