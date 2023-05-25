@@ -16,6 +16,12 @@ To put design documents into CouchDB, follow the steps below:
 curl -X PUT http://{username}:{password}@{localhost}/{database}/_design/{design_doc_name} -d @{filename}.json
 ```
 
+## To get MapReduce results
+
+```shell
+curl -X GET 'http://{username}:{password}@{localhost}/{database}/_design/{design_doc_name}/_view/{view_name}?group=true'
+```
+
 
 Make sure to replace the placeholders with the appropriate values:
 
@@ -25,6 +31,7 @@ Make sure to replace the placeholders with the appropriate values:
 - `{database}`: The name of the target database
 - `{design_doc_name}`: The name you want to assign to the design document
 - `{filename}`: The name of the JSON file containing the design document
+- `{view_name}`: The name of the view file
 
 This command will perform an HTTP `PUT` request to upload the design document to CouchDB.
 
