@@ -12,11 +12,11 @@ Jiqiang Chen         1171420
 
 Yijun Liu            1132416
 
-Running app in development:
+### Running app in development:
 
 `npm start`
 
-For production build:
+### For production build:
 
 `npm run build`
 
