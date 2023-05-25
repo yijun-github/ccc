@@ -8,7 +8,7 @@ This repository contains the source code for our 'COMP90024 Assignment 2 - Socia
 
 * Walkthrough of Couchdb deployment: https://youtu.be/D1nRjd29T2c
 
-* Walkthrough of frontend/UI: [https://youtu.be/7oCPjouVqUs](https://youtu.be/ZwgfauaIFXg)
+* Walkthrough of frontend/UI: https://youtu.be/ZwgfauaIFXg
 
 ## System architecture
 
