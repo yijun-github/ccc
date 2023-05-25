@@ -12,7 +12,7 @@ Walkthrough of frontend/UI: [https://youtu.be/7oCPjouVqUs](https://youtu.be/Zwgf
 
 ## System architecture
 
-The system architecture for this project has been deployed on the [University of Melbourne Research Cloud (MRC)](https://dashboard.cloud.unimelb.edu.au/), uses a range of technologies including [Apache CouchDB](https://couchdb.apache.org), [Ansible](https://www.ansible.com), [Docker](https://www.docker.com).
+This project has been deployed on the [University of Melbourne Research Cloud (MRC)](https://dashboard.cloud.unimelb.edu.au/), using a range of technologies including [Apache CouchDB](https://couchdb.apache.org), [Ansible](https://www.ansible.com), [Docker](https://www.docker.com).
 
 The report available [here] discusses the project in greater detail.
 
